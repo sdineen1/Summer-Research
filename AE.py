@@ -23,75 +23,12 @@ sc = MinMaxScaler(feature_range=(0,1))
 X_train_Scaled = sc.fit_transform(X_train)
 X_test_Scaled = sc.transform(X_test)
 
-#X_train_Scaled = np.reshape()
-
-
-# =============================================================================
-# Step 3A- Defing the AE Class
-# =============================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 # =============================================================================
-# Step 3A- Building the First AE Layer
+# Step 3A- Training the First AE layer
 # =============================================================================
-
-from keras.layers import Input, Dense
-from keras.models import Model, Sequential
-from keras import regularizers
-
-encoding_layers= [22,10,10,10,10]
-batch_size = 32
-nb_classes = 10
-epochs=200
-
-trained_encoders = []
-X_train_tmp = X_train_Scaled
-for n_in, n_out in zip (encoding_layers[:-1], encoding_layers[1:]):
-    print('Pre-training the layer: Input {} -> Output {}'.format(n_in, n_out))
-    
-    ae= Sequential()
-    encoder= Sequential([Dense(n_out, input_dim=n_in, activation='sigmoid', activity_regularizer=regularizers.l1(10e-5))])
-    decoder= Sequential([Dense(n_in, activation='sigmoid', actvity_regularizer=regularizers.l1(10e-5))])
-    ae.add(encoder, decoder, output_reconstruction=False, tie_weights=True)
-    
-    ae.compile(optimizer='adam', loss='mean_squared_error')
-    ae.fit(X_train, X_train, batch_size=batch_size, nb_epoch=epochs)
-    
-    trained_encoders.append(ae.layers[0].encoder)
-    
-    X_train_tmp = ae.predict(X_train_tmp)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 from keras.layers import Dense, Input
 from keras.models import Model, Sequential
@@ -99,11 +36,6 @@ from keras import regularizers
 from keras import backend as K
 from sklearn.metrics import mean_squared_error
 from math import sqrt
-
-# =============================================================================
-# Step 3A- Training the First AE layer
-# =============================================================================
-
 
 #Initialize encoding dimension set to 10 for compression ratio of 2.2
 encoding_dim=10 
@@ -226,17 +158,9 @@ sae.layers[3].set_weights(ae3_weights)
 sae.layers[4].set_weights(ae4_weights)
 
 encode_X_train = sae.predict(X_train)
-#sae.add(ae.layers[0].set_weights(ae1_weights))
 
 
 
-'''encoder=(input_shape, encoded)
-
-encoded_input = Input(shape=(encoding_dim,))
-decoder_layer = autoencoder.layer[-1]
-decoder=Model(encoded_input, decoder_layer(encoded_input))
-
-aeL1=Model(input_shape, decoded)'''
 
 
 
