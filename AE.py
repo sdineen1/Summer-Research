@@ -7,11 +7,16 @@ import pandas as pd
 import numpy as np
 
 SAP = pd.read_excel('SP500.xlsx')
-data = np.array(SAP)
+data = SAP.iloc[:, 2:].values #The first two values are date and time
+
+#DO I INCLUDE CLOSING PRICE IN THE ENCODING? I am afraid that by including closing price in the SAE, the closing price will be encoded in the output 
+#^^I.e by encoding the closing price, would the LSTM then have acess to the closing price that it is trying to predict?
+    #In regards to the above, I don't believe the LSTM will have acess to that information.  Each input vector is the information that happened at day t.  The info at day t does not include t+1 closing price, only t's closing price.  
+    #When we set up the LSTM, the decoded stock price is appended to its respective day t. The lstm then uses the info at day t to predict day t+1.  Day t's indicator does not contain info on t+1 closing price
 
 # =============================================================================
 # Step 2- Feature Scaling
-# =============================================================================
+# ============================================================================= 
 
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
@@ -22,6 +27,7 @@ sc = MinMaxScaler(feature_range=(0,1))
 
 X_train_Scaled = sc.fit_transform(X_train)
 X_test_Scaled = sc.transform(X_test)
+data_scaled = sc.transform(data)
 
 
 
@@ -158,6 +164,13 @@ sae.layers[3].set_weights(ae3_weights)
 sae.layers[4].set_weights(ae4_weights)
 
 encode_X_train = sae.predict(X_train)
+new_data = sae.predict(data_scaled)
+
+
+df = pd.DataFrame(new_data)
+
+filepath = 'SAEoutputSP500.xlsx'
+df.to_excel(filepath, index=False)
 
 
 
