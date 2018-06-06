@@ -14,7 +14,7 @@ data = data.iloc[:,2:].values
 #data = np.array(data) 
 
 #in the paper, their training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
-training_size = math.floor(len(data)*.8)
+training_size = int(math.floor(len(data)*.8))
 #cv_size = math.ceil(len(data)*.1)
 #test_size = math.ceil(len(data)*.1)
 
