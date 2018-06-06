@@ -122,6 +122,6 @@ y_pred = regressor.predict(X_test)
 
 filepath = 'LSTMoutput.csv'
 
-df = pd.DataFrame(y_pred, y_test)
+df = pd.DataFrame(y_pred)
 
 df.to_csv(filepath, index=False)
