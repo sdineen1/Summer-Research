@@ -41,6 +41,7 @@ from keras.layers import Dense, Input
 from keras.models import Model, Sequential
 from keras import regularizers
 from keras import backend as K
+from keras.callbacks import ModelCheckpoint
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 
@@ -52,15 +53,18 @@ input_shape=Input(shape=(shape,))
 #Creating the Encoder and Decoder Objects
 #In the paper, they never specifically state that they used sparsity, however; in the overview of their SAE model, they discuss a sparseity parameter but neglect to mention what type of 'sparsity' they used or the values of this parameter 
 #Big takeaway is that they must have used a sparse AE because the AE would just cheat in its four stacked layers of 10 nodes each if it wasn't sparse. "The goal is to have the least amount of neurons fire in any given instance" -Ian Goodfellow
-encoded = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regularizers.l1(10e-5))(input_shape)
+encoded = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regularizers.l1(10e-5))(input_shape) #L1 vs l2 vs l1_l2?
 decoded = Dense(shape, activation='sigmoid', activity_regularizer=regularizers.l1(10e-5))(encoded)
 
 #Building the AE
 ae = Model(input_shape, decoded)
 #In the paper, they built their own optimizer, however; after doing my own reseach, it makes more sense to use an optimizer that uses an adaptive learning rate method
 ae.compile(optimizer='adam', loss='mean_squared_error')
-ae.fit(X_train_Scaled, X_train_Scaled, epochs=200, batch_size=32)
 
+filepath_ae1 = 'ae1.hdf5'
+checkpoint_ae1 = ModelCheckpoint(filepath =filepath_ae1, monitor = 'loss', save_best_only=True, verbose=1, mode='min') #correct setting mode to min for mean_squared_error
+ae.fit(X_train_Scaled, X_train_Scaled, epochs=200, batch_size=32, callbacks=[checkpoint_ae1]) #monitor=loss?
+ModelCheckpoint()
 #Building a function that returns the raw outputs of the FIRST hidden layer
 get_hidden_layer_output = K.function([ae.layers[0].input], 
                                      [ae.layers[1].output])
@@ -88,7 +92,10 @@ decoded2 = Dense(hidden_shape_raw, activation='sigmoid', activity_regularizer=re
 
 ae2 = Model(input_shape2, decoded2)
 ae2.compile(optimizer='adam', loss='mean_squared_error')
-ae2.fit(hidden_layer_output1, hidden_layer_output1, epochs=200, batch_size=32) #using the output of the first AE to train the second AE
+
+filepath_ae2 = 'ae2.hdf5'
+checkpoint_ae2 = ModelCheckpoint(filepath=filepath_ae2, monitor= 'loss', verbose=1, mode='min', save_best_only=True)
+ae2.fit(hidden_layer_output1, hidden_layer_output1, epochs=200, batch_size=32, callbacks=[checkpoint_ae2]) #using the output of the first AE to train the second AE
 get_second_hidden_layer_output= K.function([ae2.layers[0].input], 
                                            [ae2.layers[1].output])
 hidden_layer_output2 = get_second_hidden_layer_output([hidden_layer_output1])[0]
@@ -111,7 +118,10 @@ decoded3 = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regula
 
 ae3 = Model(input_shape3, decoded3)
 ae3.compile(optimizer='adam', loss='mean_squared_error')
-ae3.fit(hidden_layer_output2, hidden_layer_output2, epochs=200, batch_size=32) #using the output from the second AE to train the third AE
+
+filepath_ae3= 'ae3.hdf5'
+checkpoint_ae3 = ModelCheckpoint(filepath=filepath_ae3, verbose=1, monitor='loss', mode='min', save_best_only=True)
+ae3.fit(hidden_layer_output2, hidden_layer_output2, epochs=200, batch_size=32, callbacks= [checkpoint_ae3]) #using the output from the second AE to train the third AE
 get_third_layer_output = K.function([ae3.layers[0].input], 
                                     [ae3.layers[1].output])
 hidden_layer_output3= get_third_layer_output([hidden_layer_output2])[0]
@@ -132,7 +142,10 @@ decoded4 = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regula
 
 ae4 = Model(input_shape4, decoded4)
 ae4.compile(optimizer='adam', loss='mean_squared_error')
-ae4.fit(hidden_layer_output3, hidden_layer_output3, epochs=200, batch_size=32) #using the output from the third AE to train the fourth AE
+
+filepath_ae4 = 'ae4.hdf5'
+checkpoint_ae4 = ModelCheckpoint(filepath=filepath_ae4, verbose=2, save_best_only=True, monitor='loss', mode='min')
+ae4.fit(hidden_layer_output3, hidden_layer_output3, epochs=200, batch_size=32, callbacks=[checkpoint_ae4]) #using the output from the third AE to train the fourth AE
 get_fourth_layer_output = K.function([ae4.layers[0].input], 
                                      [ae4.layers[1].output])
 
@@ -171,7 +184,14 @@ sae.layers[4].set_weights(ae4_weights)
 
 
 # =============================================================================
-# Step 5- Fine Tuning the SAE
+# Step 5- Saving the Model
+# =============================================================================
+
+
+
+
+# =============================================================================
+# Step 6- Fine Tuning the SAE
 # =============================================================================
 
 #The paper makes no refrence if they trained the compiled SAE after initializing the weights at each layer although this is common practice 
