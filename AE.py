@@ -1,4 +1,5 @@
-
+#python <name of file>
+#screen program useful for long experiments
 # =============================================================================
 # Step 1- Importing the Data
 # =============================================================================
@@ -175,6 +176,7 @@ encoder1 = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regula
 encoder2 = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regularizers.l1(10e-5))(encoder1)
 encoder3 = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regularizers.l1(10e-5))(encoder2)
 encoder4 = Dense(encoding_dim, activation='sigmoid', activity_regularizer=regularizers.l1(10e-5))(encoder3)
+#the same reguklarizer sparsity parameter nneds to be chanfe for easch lasyer 
 
 sae = Model(sae_input, encoder4)
 sae.layers[1].set_weights(ae1_weights)

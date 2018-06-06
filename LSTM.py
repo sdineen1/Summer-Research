@@ -7,20 +7,21 @@ import numpy as np
 import pandas as pd
 import math as math
 
-data = pd.read_excel('SAEoutputSP500.xlsx')
+data = pd.read_excel('SP500.xlsx')
 
+data = data.iloc[:,2:].values
 #Turning the pandas dataframe into numpy array
-data = np.array(data) 
+#data = np.array(data) 
 
 #in the paper, their training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
 training_size = math.floor(len(data)*.8)
-cv_size = math.ceil(len(data)*.1)
-test_size = math.ceil(len(data)*.1)
+#cv_size = math.ceil(len(data)*.1)
+#test_size = math.ceil(len(data)*.1)
 
 training_set = data[:training_size, :]
-cv_set = data[training_size:training_size+cv_size, :]
-test_set = data[training_size+cv_size:,:]
 
+
+#don;t need to preprocess after the autoencoder 
 
 # =============================================================================
 # Step 2- Data Preprocessing
@@ -41,7 +42,7 @@ time_steps = 60 #arbitraily set the # of timesteps to 60.  The paper does not sp
 #based on  the way they trained their model the # number of time_steps that they used is between 0 and 720 (not very helpful)
 
 for i in range (time_steps, len(training_set_scaled)):
-    X_train.append(training_set[i-time_steps:i, 0:11])
+    X_train.append(training_set[i-time_steps:i, 0:19])
     y_train.append(training_set[i, 0])
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
@@ -99,5 +100,28 @@ regressor.compile(optimizer= 'adam', loss= 'mean_squared_error')
 
 regressor.fit(X_train, y_train, epochs=epochs, batch_size= batch_size )
 
+# =============================================================================
+# Step 5- Predictions
+# =============================================================================
 
+test_size = int(np.ceil(len(data)*.2))
+inputs = data[len(data)-test_size-time_steps:]
+inputs = sc.transform(inputs)
+X_test = []
+for i in range (time_steps , len(inputs)):
+    X_test.append(inputs[i-time_steps:i,0:19])
+    
+X_test = np.array(X_test)
+y_test = inputs[time_steps:len(inputs),0]
 
+y_pred = regressor.predict(X_test)
+
+# =============================================================================
+# Step 6- Exporting the files 
+# =============================================================================
+
+filepath = 'LSTMoutput.csv'
+
+df = pd.DataFrame(y_pred, y_test)
+
+df.to_csv(filepath, index=False)
