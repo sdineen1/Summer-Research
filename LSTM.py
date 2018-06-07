@@ -47,7 +47,7 @@ for i in range (time_steps, len(training_set_scaled)):
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
-X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 11)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
+X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 19)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
 
 
 # =============================================================================
@@ -63,7 +63,7 @@ dropout_rate =.2 #Arbitrarily set dropout rate to .2.
 regressor = Sequential()
 
 #Adding the first LSTM layer
-regressor.add(LSTM(units = 100, return_sequences=True, input_shape = (X_train.shape[1], 11)))
+regressor.add(LSTM(units = 100, return_sequences=True, input_shape = (X_train.shape[1], 19)))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the second LSTM layer
