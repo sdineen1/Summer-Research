@@ -42,12 +42,12 @@ time_steps = 60 #arbitraily set the # of timesteps to 60.  The paper does not sp
 #based on  the way they trained their model the # number of time_steps that they used is between 0 and 720 (not very helpful)
 
 for i in range (time_steps, len(training_set_scaled)):
-    X_train.append(training_set[i-time_steps:i, 0:19])
+    X_train.append(training_set[i-time_steps:i, 0:4])
     y_train.append(training_set[i, 0])
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
-X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 19)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
+X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 2)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
 
 
 # =============================================================================
@@ -63,7 +63,7 @@ dropout_rate =.2 #Arbitrarily set dropout rate to .2.
 regressor = Sequential()
 
 #Adding the first LSTM layer
-regressor.add(LSTM(units = 100, return_sequences=True, input_shape = (X_train.shape[1], 19)))
+regressor.add(LSTM(units = 100, return_sequences=True, input_shape = (X_train.shape[1], 4)))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the second LSTM layer
@@ -109,7 +109,7 @@ inputs = data[len(data)-test_size-time_steps:]
 inputs = sc.transform(inputs)
 X_test = []
 for i in range (time_steps , len(inputs)):
-    X_test.append(inputs[i-time_steps:i,0:19])
+    X_test.append(inputs[i-time_steps:i,0:4])
     
 X_test = np.array(X_test)
 y_test = inputs[time_steps:len(inputs),0]
