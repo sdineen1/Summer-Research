@@ -63,23 +63,23 @@ dropout_rate =.2 #Arbitrarily set dropout rate to .2.
 regressor = Sequential()
 
 #Adding the first LSTM layer
-regressor.add(LSTM(units = 100, return_sequences=True, input_shape = (X_train.shape[1], 12)))
+regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 12)))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the second LSTM layer
-regressor.add(LSTM(units=100, return_sequences=True))
+regressor.add(LSTM(units=200, return_sequences=True))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the third LSTM layer
-regressor.add(LSTM(units=100, return_sequences=True))
+regressor.add(LSTM(units=200, return_sequences=True))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the fourth LSTM layer
-regressor.add(LSTM(units=100, return_sequences=True))
+regressor.add(LSTM(units=200, return_sequences=True))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the 5th LSTM layer
-regressor.add(LSTM(units=100))
+regressor.add(LSTM(units=200))
 regressor.add(Dropout(dropout_rate))
 
 #Output layer
@@ -91,7 +91,7 @@ regressor.add(Dense(units=1))
 # =============================================================================
 
 #In the paper they specified that they used 5000 epochs and a batch size of 60
-epochs = 200
+epochs = 100
 batch_size = 60
 learning_rate = .05
 
