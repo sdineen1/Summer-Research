@@ -47,7 +47,7 @@ for i in range (time_steps, len(training_set_scaled)):
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
-X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 2)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
+X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 4)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
 
 
 # =============================================================================
