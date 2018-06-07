@@ -109,7 +109,7 @@ inputs = data[len(data)-test_size-time_steps:]
 inputs = sc.transform(inputs)
 X_test = []
 for i in range (time_steps , len(inputs)):
-    X_test.append(inputs[i-time_steps:i])
+    X_test.append(inputs[i-time_steps:i, 0:16])
     
 X_test = np.array(X_test)
 y_test = inputs[time_steps:len(inputs),0]
