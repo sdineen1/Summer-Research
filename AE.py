@@ -65,7 +65,7 @@ ae.compile(optimizer='adam', loss='mean_squared_error')
 filepath_ae1 = 'ae1.hdf5'
 checkpoint_ae1 = ModelCheckpoint(filepath =filepath_ae1, monitor = 'loss', save_best_only=True, verbose=1, mode='min') #correct setting mode to min for mean_squared_error
 ae.fit(X_train_Scaled, X_train_Scaled, epochs=200, batch_size=32, callbacks=[checkpoint_ae1]) #monitor=loss?
-ModelCheckpoint()
+
 #Building a function that returns the raw outputs of the FIRST hidden layer
 get_hidden_layer_output = K.function([ae.layers[0].input], 
                                      [ae.layers[1].output])
