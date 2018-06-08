@@ -38,7 +38,7 @@ training_set_scaled = sc.fit_transform(training_set)
 X_train = []
 y_train = []
 
-time_steps = 90 #arbitraily set the # of timesteps to 60.  The paper does not specify the # number of timesteps that they used, however; 
+time_steps = 75 #arbitraily set the # of timesteps to 60.  The paper does not specify the # number of timesteps that they used, however; 
 #based on  the way they trained their model the # number of time_steps that they used is between 0 and 720 (not very helpful)
 
 for i in range (time_steps, len(training_set_scaled)):
