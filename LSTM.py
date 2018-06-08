@@ -91,7 +91,7 @@ regressor.add(Dense(units=1))
 # =============================================================================
 
 #In the paper they specified that they used 5000 epochs and a batch size of 60
-epochs = 150
+epochs = 100
 batch_size = 60
 learning_rate = .05
 
