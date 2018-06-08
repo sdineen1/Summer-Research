@@ -79,7 +79,7 @@ regressor.add(LSTM(units=200, return_sequences=True))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the 5th LSTM layer
-regressor.add(LSTM(units=200))
+regressor.add(LSTM(units=200, return_sequences=True))
 regressor.add(Dropout(dropout_rate))
 
 #EXPERIMENTAL 6th LSTM LAYER
