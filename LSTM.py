@@ -82,6 +82,10 @@ regressor.add(Dropout(dropout_rate))
 regressor.add(LSTM(units=200))
 regressor.add(Dropout(dropout_rate))
 
+#EXPERIMENTAL 6th LSTM LAYER
+regressor.add(LSTM(units=200))
+regressor.add(Dropout(dropout_rate))
+
 #Output layer
 regressor.add(Dense(units=1))
 
