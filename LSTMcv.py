@@ -67,7 +67,7 @@ def train_regressor(compiled_regressor , X_train, y_train, epochs, batch_size):
         return regressor
 
 
-time_steps = 90
+time_steps = 105
 features = int(dataset_scaled.shape[1])
 X = []
 y = []
