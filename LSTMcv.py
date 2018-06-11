@@ -101,7 +101,7 @@ for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
     predicted = regressor.predict(X_test)
     
     correl = np.corrcoef(predicted, y_test)
-    correlations.append(correl)
+    correlations.append(correl[0,1])
 
 filepath = 'LSTMcorrelations.csv'
 df = pd.DataFrame(correlations)
