@@ -96,10 +96,10 @@ for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
     shape_train = (X_train[0], features)
     
     regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-    regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
+    regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 2 , batch_size = 60)
     
     predicted = regressor.predict(X_test)
-    
+    predicted = predicted[:,0]
     correl = np.corrcoef(predicted, y_test)
     correlations.append(correl[0,1])
 
