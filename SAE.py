@@ -60,8 +60,8 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     input_shape1 = Input(shape = (shape1, ))
     
     
-    encoded1 = Dense(units = layers[1], activation = activation, activity_regularizer = regularizer[0] )(input_shape1)
-    decoded1 = Dense(units = shape1, activation = activation, activity_regularizer = regularizer[0])(encoded1)
+    encoded1 = Dense(units = layers[1], activation = activation, activity_regularizer = regularizers.l1(.05) )(input_shape1)
+    decoded1 = Dense(units = shape1, activation = activation, activity_regularizer = regularizers.l1(.05))(encoded1)
     
     ae1 = Model(input_shape1, decoded1)
     
@@ -78,8 +78,8 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     shape2 = layers[1]
     input_shape2 = Input(shape= (shape2, ))
     
-    encoded2 = Dense(units = layers[2], activation = activation, activity_regularizer = regularizers[1])(input_shape2)
-    decoded2 = Dense(units = shape2, activation = activation, activity_regularizer = regularizers[1])(encoded2)
+    encoded2 = Dense(units = layers[2], activation = activation, activity_regularizer = regularizers.l1(.05))(input_shape2)
+    decoded2 = Dense(units = shape2, activation = activation, activity_regularizer = regularizers.l1(.05))(encoded2)
     
     ae2 = Model(input_shape2, decoded2)
     
@@ -96,8 +96,8 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     shape3 = layers[2]
     input_shape3 = Input(shape= (shape3, ))
     
-    encoded3 = Dense(units = layers[3], activation = activation, activity_regularizer = regularizers[2])(input_shape3)
-    decoded3 = Dense(units = shape3, activation = activation, activity_regularizer = regularizers[2])(encoded3)
+    encoded3 = Dense(units = layers[3], activation = activation, activity_regularizer = regularizers.l1(.05))(input_shape3)
+    decoded3 = Dense(units = shape3, activation = activation, activity_regularizer = regularizers.l1(.05))(encoded3)
     
     ae3 = Model(input_shape3, decoded3)
     
@@ -114,8 +114,8 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     shape4 = layers[3]
     input_shape4 = Input(shape= (shape4, ))
     
-    encoded4 = Dense(units = layers[4], activation = activation, activity_regularizer = regularizers[3])(input_shape4)
-    decoded4 = Dense(units = shape2, activation = activation, activity_regularizer = regularizers[3])(encoded4)
+    encoded4 = Dense(units = layers[4], activation = activation, activity_regularizer = rregularizers.l1(.05))(input_shape4)
+    decoded4 = Dense(units = shape2, activation = activation, activity_regularizer = regularizers.l1(.05))(encoded4)
     
     ae4 = Model(input_shape4, decoded4)
     
@@ -139,10 +139,10 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     #Creating a model that pools all of learned weights together 
     #Wasn't sure if I should add the outputs of the fourth sae to the model
     sae_input = Input(shape=(layers[0], ))
-    sae_en1 = Dense(units = layers[1], activation=activation, activity_regularizer=regularizers.l1_l2(regularizers[0])(sae_input)
-    sae_en2 = Dense(units = layers[2], activation=activation, activity_regularizer=regularizers.l1_l2(regularizers[1])(sae_en1)
-    sae_en3 = Dense(units = layers[3], activation=activation, activity_regularizer=regularizers.l1_l2(regularizers[2])(sae_en2)
-    sae_en4 = Dense(units = layers[4], activation=activation, activity_regularizer=regularizers.l1_l2(regularizers[3])(sae_en3)
+    sae_en1 = Dense(units = layers[1], activation=activation, activity_regularizer=regularizers.l1(regularizers[0]))(sae_input)
+    sae_en2 = Dense(units = layers[2], activation=activation, activity_regularizer=regularizers.l1(regularizers[1]))(sae_en1)
+    sae_en3 = Dense(units = layers[3], activation=activation, activity_regularizer=regularizers.l1(regularizers[2]))(sae_en2)
+    sae_en4 = Dense(units = layers[4], activation=activation, activity_regularizer=regularizers.l1(regularizers[3]))(sae_en3)
     #the same reguklarizer sparsity parameter nneds to be chanfe for easch lasyer 
 
     sae = Model(sae_input, sae_en4)
@@ -158,9 +158,25 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     
  #Should I train the AE on the whole dataset or use a train and test set   
     
-layers = [data_scaled.shape[1], 24, 32, 32, 32]
+layers = [data_scaled.shape[1], 24, 32, 40, 42]
+regularizer1 = np.random.uniform(.05,10e-4)
+regularizer2 = np.random.uniform(.05,10e-4)
+regularizer3 = np.random.uniform(.05,10e-4)
+regularizer4 = np.random.uniform(.05,10e-4)
 
-regularizers = [np.random.uniform(.05,10e-5), 
-                np.random.uniform(.05,10e-5), 
-                np.random.uniform(.05,10e-5), 
-                np.random.uniform(.05,10e-5)]
+
+regularizers_input = [.05, 
+                .025, 
+                .0125, 
+                .05]
+
+sae, rmse = build_SAE(layers=layers, data=data_scaled, activation = 'sigmoid', regularizer = regularizers_input, batch_size=30, epochs=1000, optim='adam' )
+
+predict = sae.predict(dataset_scaled)
+
+filepath = 'SAEoutput.csv'
+filepath2= 'SAE_RMSE.csv'
+df = pd.DataFrame(predict)
+df2 = pd.DataFrame(rmse)
+df2.to_csv(filepath2, index=False)
+df.to_csv(filepath, index=False)
