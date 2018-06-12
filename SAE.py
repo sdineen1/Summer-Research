@@ -141,9 +141,9 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     #Wasn't sure if I should add the outputs of the fourth sae to the model
     sae_input = Input(shape=(layers[0], )) #
     sae_en1 = Dense(units = layers[1], activation=activation, activity_regularizer=regularizers.l1(.05))(sae_input)
-    sae_en2 = Dense(units = layers[2], activation=activation, activity_regularizer=regularizers.l1(.05))(sae_en1)
-    sae_en3 = Dense(units = layers[3], activation=activation, activity_regularizer=regularizers.l1(.05))(sae_en2)
-    sae_en4 = Dense(units = layers[4], activation=activation, activity_regularizer=regularizers.l1(.05))(sae_en3)
+    sae_en2 = Dense(units = layers[2], activation=activation, activity_regularizer=regularizers.l1(.025))(sae_en1)
+    sae_en3 = Dense(units = layers[3], activation=activation, activity_regularizer=regularizers.l1(.0125))(sae_en2)
+    sae_en4 = Dense(units = layers[4], activation=activation, activity_regularizer=regularizers.l1(.0075))(sae_en3)
     #the same reguklarizer sparsity parameter nneds to be chanfe for easch lasyer 
 
     sae = Model(sae_input, sae_en4)
