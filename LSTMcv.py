@@ -11,9 +11,11 @@ Created on Fri Jun  8 11:52:34 2018
 import numpy as np
 import pandas as pd
 
-dataset = pd.read_excel('SP500.xlsx')
+dataset = pd.read_excel('SAEoutputSP500.xlsx')
+#dataset = pd.read_excel('SP500.xlsx')
+#dataset = dataset.iloc[:,2:].values
 
-dataset = dataset.iloc[:,2:].values
+dataset = np.array(dataset)
 
 
 
@@ -74,7 +76,7 @@ y = []
 
 #So this sets up our correct X and y vectors
 for i in range(time_steps, int(len(dataset_scaled))):
-    X.append(dataset_scaled[i-time_steps:i,0:features]) #dataset_scaled
+    X.append(dataset_scaled[i-time_steps:i,1:features]) #dataset_scaled
     y.append(dataset_scaled[i,0]) #dataset_scaled
 
 X, y = np.array(X), np.array(y)
@@ -95,7 +97,7 @@ for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
 
     shape_train = (X_train[0], features)
     
-    regressor = compile_regressor(units = 250, shape = X_train, dropout_rate = .2, optim = 'adam')
+    regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
     regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
     
     predicted = regressor.predict(X_test)
