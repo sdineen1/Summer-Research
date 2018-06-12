@@ -78,8 +78,8 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     shape2 = layers[1]
     input_shape2 = Input(shape= (shape2, ))
     
-    encoded2 = Dense(units = layers[2], activation = activation, activity_regularizer = regularizers.l1(.05))(input_shape2)
-    decoded2 = Dense(units = shape2, activation = activation, activity_regularizer = regularizers.l1(.05))(encoded2)
+    encoded2 = Dense(units = layers[2], activation = activation, activity_regularizer = regularizers.l1(.025))(input_shape2)
+    decoded2 = Dense(units = shape2, activation = activation, activity_regularizer = regularizers.l1(.025))(encoded2)
     
     ae2 = Model(input_shape2, decoded2)
     
@@ -96,8 +96,8 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     shape3 = layers[2]
     input_shape3 = Input(shape= (shape3, ))
     
-    encoded3 = Dense(units = layers[3], activation = activation, activity_regularizer = regularizers.l1(.05))(input_shape3)
-    decoded3 = Dense(units = shape3, activation = activation, activity_regularizer = regularizers.l1(.05))(encoded3)
+    encoded3 = Dense(units = layers[3], activation = activation, activity_regularizer = regularizers.l1(.0125))(input_shape3)
+    decoded3 = Dense(units = shape3, activation = activation, activity_regularizer = regularizers.l1(.0125))(encoded3)
     
     ae3 = Model(input_shape3, decoded3)
     
@@ -114,8 +114,8 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     shape4 = layers[3]
     input_shape4 = Input(shape= (shape4, ))
     
-    encoded4 = Dense(units = layers[4], activation = activation, activity_regularizer = regularizers.l1(.05))(input_shape4)
-    decoded4 = Dense(units = shape4, activation = activation, activity_regularizer = regularizers.l1(.05))(encoded4)
+    encoded4 = Dense(units = layers[4], activation = activation, activity_regularizer = regularizers.l1(.0075))(input_shape4)
+    decoded4 = Dense(units = shape4, activation = activation, activity_regularizer = regularizers.l1(.0075))(encoded4)
     
     ae4 = Model(input_shape4, decoded4)
     
@@ -172,7 +172,7 @@ regularizers_input = [.05,
                 .0125, 
                 .05]
 
-sae, rmse = build_SAE(layers=layers, data=data_scaled, activation = 'sigmoid', regularizer = regularizers_input, batch_size=30, epochs=1000, optim='adam' )
+sae, rmse = build_SAE(layers=layers, data=data_scaled, activation = 'sigmoid', regularizer = regularizers_input, batch_size=30, epochs=750, optim='adam' )
 
 predict = sae.predict(data_scaled)
 
