@@ -160,7 +160,7 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     
  #Should I train the AE on the whole dataset or use a train and test set   
     
-layers = [data_scaled.shape[1], 24, 32, 40, 42]
+layers = [data_scaled.shape[1], 22, 26, 30, 34]
 regularizer1 = np.random.uniform(.05,10e-4)
 regularizer2 = np.random.uniform(.05,10e-4)
 regularizer3 = np.random.uniform(.05,10e-4)
@@ -172,7 +172,7 @@ regularizers_input = [.05,
                 .0125, 
                 .05]
 
-sae, rmse = build_SAE(layers=layers, data=data_scaled, activation = 'sigmoid', regularizer = regularizers_input, batch_size=30, epochs=2000, optim='adam' )
+sae, rmse = build_SAE(layers=layers, data=data_scaled, activation = 'sigmoid', regularizer = regularizers_input, batch_size=30, epochs=1000, optim='adam' )
 
 predict = sae.predict(data_scaled)
 
