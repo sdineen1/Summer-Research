@@ -201,7 +201,7 @@ def SAE_one_layer(layers, rho, data, optim, epochs, batch_size):
     for j in range(len(rho)):
         for i in range(len(layers)):
             input_shape = Input(shape = (data.shape[1], ))
-            encoding = Dense(units = layers[i], activation ='sigmpid', activity_regularizer = regularizers.l1(rho[j]))(input_shape)
+            encoding = Dense(units = layers[i], activation ='sigmoid', activity_regularizer = regularizers.l1(rho[j]))(input_shape)
             decoding = Dense(units = data.shape[1], activation = 'sigmoid', activity_regularizer = regularizers.l1(rho[j]))(encoding)
             
             ae = Model(input_shape, decoding)
