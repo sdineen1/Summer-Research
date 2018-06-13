@@ -13,7 +13,7 @@ import math as math
 #Turning the pandas dataframe into numpy array
 #data = np.array(data) 
 data = pd.read_csv('SAEoutput.csv')
-data = np.array(dataset)
+data = np.array(data)
 
 #in the paper, their training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
 training_size = int(math.floor(len(data)*.8))
