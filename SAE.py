@@ -193,7 +193,6 @@ df = pd.DataFrame(predict)
 #df2.to_csv(filepath2, index=False)
 df.to_csv(filepath, index=False)'''
 
-import matplotlib as plt
 
 def SAE_one_layer(layers, rho, data, optim, epochs, batch_size):
     
