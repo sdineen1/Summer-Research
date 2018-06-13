@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 #dataset = pd.read_excel('SAEoutputSP500.xlsx')
-dataset = pd.read_csv('SAEoutput.xlsx')
+dataset = pd.read_csv('SAEoutput.csv')
 #dataset = dataset.iloc[:,2:].values
 
 dataset = np.array(dataset)
