@@ -11,8 +11,8 @@ Created on Fri Jun  8 11:52:34 2018
 import numpy as np
 import pandas as pd
 
-dataset = pd.read_excel('SAEoutputSP500.xlsx')
-#dataset = pd.read_excel('SP500.xlsx')
+#dataset = pd.read_excel('SAEoutputSP500.xlsx')
+dataset = pd.read_csv('SAEoutput.xlsx')
 #dataset = dataset.iloc[:,2:].values
 
 dataset = np.array(dataset)
