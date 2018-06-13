@@ -205,7 +205,7 @@ def SAE_one_layer(layers, rho, data, optim, epochs, batch_size):
             decoding = Dense(units = data.shape[1], activation = 'sigmoid', activity_regularizer = regularizers.l1(rho[j]))(encoding)
             
             ae = Model(input_shape, decoding)
-            ae.compile(optimizer = optim, loss = 'mean_squared_erro')
+            ae.compile(optimizer = optim, loss = 'mean_squared_error')
             sae.fit(x = data, y = data, epochs = epochs , batch_size = batch_size)
             
             predict = ae.predict(data)
