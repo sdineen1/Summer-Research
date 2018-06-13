@@ -206,7 +206,7 @@ def SAE_one_layer(layers, rho, data, optim, epochs, batch_size):
             
             ae = Model(input_shape, decoding)
             ae.compile(optimizer = optim, loss = 'mean_squared_error')
-            sae.fit(x = data, y = data, epochs = epochs , batch_size = batch_size)
+            ae.fit(x = data, y = data, epochs = epochs , batch_size = batch_size)
             
             predict = ae.predict(data)
             reconstruction_error= mean_squared_error(data, predict)
