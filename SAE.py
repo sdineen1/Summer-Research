@@ -49,6 +49,7 @@ def RMSE(predict, ground_truth):
     return rmse
 
 
+#nneds to be fixed. Error is in using output for training
 def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     
     #List that will keep track of the RMSE for each AE
@@ -71,7 +72,7 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     hidden_output1 = K.function([ae1.layers[0].input], [ae1.layers[1].output])
     output1 = hidden_output1([data])[0]
     
-    '''rmse1 = RMSE(ae1.predict(data), data)
+    rmse1 = RMSE(ae1.predict(data), data)
     rmse.append(rmse1)
     
     #Building the second AE
@@ -127,58 +128,104 @@ def build_SAE(layers, data, activation, regularizer, batch_size, epochs, optim):
     output4 = hidden_output4([output3])[0]
     
     rmse4 = RMSE(ae4.predict(output3), output3)
-    rmse.append(rmse4)'''
+    rmse.append(rmse4)
     
     ae1_weights = ae1.layers[1].get_weights() 
-    '''ae2_weights = ae2.layers[1].get_weights() 
+    ae2_weights = ae2.layers[1].get_weights() 
     ae3_weights = ae3.layers[1].get_weights() 
     ae4_weights = ae4.layers[1].get_weights() 
 
     #these are the wieghts that connect the last hidden layer to the output layer
-    ae4_weights_output = ae4.layers[2].get_weights()'''
+    ae4_weights_output = ae4.layers[2].get_weights()
 
     #Creating a model that pools all of learned weights together 
     #Wasn't sure if I should add the outputs of the fourth sae to the model
     sae_input = Input(shape=(layers[0], )) #
     sae_en1 = Dense(units = layers[1], activation=activation, activity_regularizer=regularizers.l1(.05))(sae_input)
-    '''sae_en2 = Dense(units = layers[2], activation=activation, activity_regularizer=regularizers.l1(.025))(sae_en1)
+    sae_en2 = Dense(units = layers[2], activation=activation, activity_regularizer=regularizers.l1(.025))(sae_en1)
     sae_en3 = Dense(units = layers[3], activation=activation, activity_regularizer=regularizers.l1(.0125))(sae_en2)
-    sae_en4 = Dense(units = layers[4], activation=activation, activity_regularizer=regularizers.l1(.0075))(sae_en3)'''
+    sae_en4 = Dense(units = layers[4], activation=activation, activity_regularizer=regularizers.l1(.0075))(sae_en3)
     #the same reguklarizer sparsity parameter nneds to be chanfe for easch lasyer 
 
     sae = Model(sae_input, sae_en1)
     sae.layers[1].set_weights(ae1_weights)
-    '''sae.layers[2].set_weights(ae2_weights)
+    sae.layers[2].set_weights(ae2_weights)
     sae.layers[3].set_weights(ae3_weights)
     sae.layers[4].set_weights(ae4_weights)
     
     
-    rmse = np.array(rmse)'''
+    rmse = np.array(rmse)
     
     
     return sae#, rmse
     
  #Should I train the AE on the whole dataset or use a train and test set   
+
+
+'''
+shape1 = layers[0]
+input_shape1 = Input(shape = (shape1, ))
     
-layers = [data_scaled.shape[1], 24]#, 26, 30, 34]
-regularizer1 = np.random.uniform(.05,10e-4)
-regularizer2 = np.random.uniform(.05,10e-4)
-regularizer3 = np.random.uniform(.05,10e-4)
-regularizer4 = np.random.uniform(.05,10e-4)
+    
+encoded1 = Dense(units = layers[1], activation = 'sigmoid', activity_regularizer = regularizers.l1(.05) )(input_shape1)
+decoded1 = Dense(units = shape1, activation = 'sigmoid', activity_regularizer = regularizers.l1(.05))(encoded1)
+    
+ae1 = Model(input_shape1, decoded1)
+    
+ae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
+ae1.fit(x = data_scaled, y = data_scaled, batch_size = 60, epochs = 100)
+    
+hidden_output1 = K.function([ae1.layers[0].input], [ae1.layers[1].output])
+output1 = hidden_output1([data])[0]
+ae1_weights = ae1.layers[1].get_weights()
 
-
-regularizers_input = [.05, 
-                .025, 
-                .0125, 
-                .05]
-
-sae, rmse = build_SAE(layers=layers, data=data_scaled, activation = 'sigmoid', regularizer = regularizers_input, batch_size=30, epochs=500, optim='adam' )
+sae_input = Input(shape = (shape1, ))
+en = Dense(units = layers[1], activation = 'sigmoid', activity_regularizer = regularizers.l1(.05))(sae_input)
+sae = Model(sae_input, en)
+sae.set_weights(ae1_weights)
 
 predict = sae.predict(data_scaled)
 
 filepath = 'SAEoutput.csv'
-filepath2= 'SAE_RMSE.csv'
+#filepath2= 'SAE_RMSE.csv'
 df = pd.DataFrame(predict)
-df2 = pd.DataFrame(rmse)
-df2.to_csv(filepath2, index=False)
+#df2 = pd.DataFrame(rmse)
+#df2.to_csv(filepath2, index=False)
+df.to_csv(filepath, index=False)'''
+
+import matplotlib as plt
+
+def SAE_one_layer(layers, rho, data, optim, epochs, batch_size):
+    
+    error = []
+    
+    for j in range(len(rho)):
+        for i in range(len(layers)):
+            input_shape = Input(shape = (data.shape[1], ))
+            encoding = Dense(units = layers[i], activation ='sigmpid', activity_regularizer = regularizers.l1(rho[j]))(input_shape)
+            decoding = Dense(units = data.shape[1], activation = 'sigmoid', activity_regularizer = regularizers.l1(rho[j]))(encoding)
+            
+            ae = Model(input_shape, decoding)
+            ae.compile(optimizer = optim, loss = 'mean_squared_erro')
+            sae.fit(x = data, y = data, epochs = epochs , batch_size = batch_size)
+            
+            predict = ae.predict(data)
+            reconstruction_error= mean_squared_error(data, predict)
+            
+            error.append([reconstruction_error, layers[i], rho[j]])
+
+    return error
+
+
+layers = [18, 22, 26, 30, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72]
+rho = [.5, .25, .125 , .1, .075, .05, .0375, .01875, .009375]
+error = SAE_one_layer(layers=layers, rho = rho, data = data_scaled, optim = 'adam', epochs = 750, batch_size = 60)
+
+filepath = 'SAE_Reconstruction_Error.csv'
+df = pd.DataFrame(error)
 df.to_csv(filepath, index=False)
+            
+            
+
+            
+           
