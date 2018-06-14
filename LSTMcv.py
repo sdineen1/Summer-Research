@@ -76,11 +76,11 @@ y = []
 
 #So this sets up our correct X and y vectors
 for i in range(time_steps, int(len(dataset_scaled))):
-    X.append(dataset_scaled[i-time_steps:i,0:features]) #dataset_scaled
+    X.append(dataset_scaled[i-time_steps:i,1:features]) #dataset_scaled
     y.append(dataset_scaled[i,0]) #dataset_scaled
 
 X, y = np.array(X), np.array(y)
-X = np.reshape(X, (X.shape[0], X.shape[1], features))
+X = np.reshape(X, (X.shape[0], X.shape[1], features-1))
 
 training_set_size = int(len(X)*.25)
 test_size = int(.25*training_set_size)
@@ -111,9 +111,9 @@ df = pd.DataFrame(correlations)
 df.to_csv(filepath, index=False)'''
 X_train_size = int(len(X)*.8)
 
-X_train = X[0:X_train_size,1:]
+X_train = X[0:X_train_size,:]
 y_train = y[0:X_train_size]
-X_test = X[X_train_size:,1:]
+X_test = X[X_train_size:,:]
 y_test = y[X_train_size:]
 
 regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
