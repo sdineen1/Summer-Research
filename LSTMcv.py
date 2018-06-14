@@ -76,8 +76,8 @@ y = []
 
 #So this sets up our correct X and y vectors
 for i in range(time_steps, int(len(dataset_scaled))):
-    X.append(dataset[i-time_steps:i,0:features]) #dataset_scaled
-    y.append(dataset[i,0]) #dataset_scaled
+    X.append(dataset_scaled[i-time_steps:i,0:features]) #dataset_scaled
+    y.append(dataset_scaled[i,0]) #dataset_scaled
 
 X, y = np.array(X), np.array(y)
 X = np.reshape(X, (X.shape[0], X.shape[1], features))
