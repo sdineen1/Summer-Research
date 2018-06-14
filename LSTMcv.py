@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 #dataset = pd.read_excel('SAEoutputSP500.xlsx')
-dataset = pd.read_csv('SAEoutput.csv')
+dataset = pd.read_csv('WaveletOutput.csv')
 #dataset = dataset.iloc[:,2:].values
 
 dataset = np.array(dataset)
@@ -76,8 +76,8 @@ y = []
 
 #So this sets up our correct X and y vectors
 for i in range(time_steps, int(len(dataset_scaled))):
-    X.append(dataset_scaled[i-time_steps:i,0:features]) #dataset_scaled
-    y.append(dataset_scaled[i,0]) #dataset_scaled
+    X.append(dataset[i-time_steps:i,0:features]) #dataset_scaled
+    y.append(dataset[i,0]) #dataset_scaled
 
 X, y = np.array(X), np.array(y)
 X = np.reshape(X, (X.shape[0], X.shape[1], features))
@@ -87,7 +87,7 @@ test_size = int(.25*training_set_size)
 
 correlations = []
 
-for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
+'''for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
     
     X_train = X[i:i+training_set_size, :, :]
     y_train = y[i:i+training_set_size]
@@ -105,7 +105,26 @@ for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
     correl = np.corrcoef(predicted, y_test)
     correlations.append(correl[0,1])
 
+
 filepath = 'LSTMcorrelations.csv'
+df = pd.DataFrame(correlations)
+df.to_csv(filepath, index=False)'''
+X_train_size = int(len(X)*.8)
+
+X_train = X[0:X_train_size,1:]
+y_train = y[0:X_train_size]
+X_test = X[X_train_size:,1:]
+y_test = y[X_train_size:]
+
+regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
+regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
+
+predicted = regressor.predict(X_test)
+predicted = predicted[:,0]
+correl = np.corrcoef(predicted, y_test)
+
+
+filepath = 'WLSTM.csv'
 df = pd.DataFrame(correlations)
 df.to_csv(filepath, index=False)
 
