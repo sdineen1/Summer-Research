@@ -125,7 +125,7 @@ correl = np.corrcoef(predicted, y_test)
 
 
 filepath = 'WLSTM.csv'
-df = pd.DataFrame(correlations)
+df = pd.DataFrame(predicted)
 df.to_csv(filepath, index=False)
 
         
