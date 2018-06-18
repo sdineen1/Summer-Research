@@ -64,7 +64,7 @@ dropout_rate =.2 #Arbitrarily set dropout rate to .2.
 regressor = Sequential()
 
 #Adding the first LSTM layer
-regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 19)))
+regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 8)))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the second LSTM layer
