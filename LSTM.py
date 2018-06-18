@@ -12,7 +12,7 @@ import math as math
 #data = data.iloc[:,2:].values
 #Turning the pandas dataframe into numpy array
 #data = np.array(data) 
-data = pd.read_csv('WaveletOutput.csv')
+data = pd.read_csv('WaveletOutput.csv', engine= 'python', encoding = 'latin-1' )
 data = np.array(data)
 
 #In the paper, Bao, Yue, and Rao’s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
