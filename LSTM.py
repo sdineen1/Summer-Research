@@ -12,10 +12,10 @@ import math as math
 #data = data.iloc[:,2:].values
 #Turning the pandas dataframe into numpy array
 #data = np.array(data) 
-data = pd.read_csv('SAEoutput.csv')
+data = pd.read_csv('WaveletOutput.csv')
 data = np.array(data)
 
-#in the paper, their training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
+#In the paper, Bao, Yue, and Rao’s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
 training_size = int(math.floor(len(data)*.8))
 #cv_size = math.ceil(len(data)*.1)
 #test_size = math.ceil(len(data)*.1)
@@ -40,16 +40,16 @@ training_set_scaled = sc.fit_transform(training_set)
 X_train = []
 y_train = []
 
-time_steps = 75 #arbitraily set the # of timesteps to 60.  The paper does not specify the # number of timesteps that they used, however; 
+time_steps = 90 #arbitraily set the # of timesteps to 60.  The paper does not specify the # number of timesteps that they used, however; 
 #based on  the way they trained their model the # number of time_steps that they used is between 0 and 720 (not very helpful)
 
 for i in range (time_steps, len(training_set_scaled)):
-    X_train.append(training_set_scaled[i-time_steps:i, 0:19])
-    y_train.append(training_set_scaled[i, 0])
+    X_train.append(training_set_scaled[i-time_steps:i, 0:8])   #training_set_scaled
+    y_train.append(training_set_scaled[i, 0])                   #training_set_scaled
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
-X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 19)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
+X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 8)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
 
 
 # =============================================================================
@@ -115,7 +115,7 @@ inputs = data[len(data)-test_size-time_steps:]
 inputs = sc.transform(inputs)
 X_test = []
 for i in range (time_steps , len(inputs)):
-    X_test.append(inputs[i-time_steps:i, 0:19])
+    X_test.append(inputs[i-time_steps:i, 0:8])
     
 X_test = np.array(X_test)
 y_test = inputs[time_steps:len(inputs),0]
@@ -125,9 +125,9 @@ y_pred = regressor.predict(X_test)
 # =============================================================================
 # Step 6- Exporting the files 
 # =============================================================================
-
+y = np.concatenate(y_pred, y_test, axis=1)
 filepath = 'LSTMoutput.csv'
 
-df = pd.DataFrame(y_pred)
+df = pd.DataFrame(y)
 
 df.to_csv(filepath, index=False)

@@ -11,11 +11,11 @@ Created on Fri Jun  8 11:52:34 2018
 import numpy as np
 import pandas as pd
 
-#dataset = pd.read_excel('SAEoutputSP500.xlsx')
-dataset = pd.read_csv('WaveletOutput.csv')
-#dataset = dataset.iloc[:,2:].values
+dataset = pd.read_excel('SAEoutputSP500.xlsx')
+#dataset = pd.read_csv('WaveletOutput.csv')
+dataset = dataset.iloc[:,2:].values
 
-dataset = np.array(dataset)
+#dataset = np.array(dataset)
 
 
 
@@ -69,15 +69,15 @@ def train_regressor(compiled_regressor , X_train, y_train, epochs, batch_size):
         return regressor
 
 
-time_steps = 90
+time_steps = 75 #90
 features = int(dataset_scaled.shape[1])
 X = []
 y = []
 
-#So this sets up our correct X and y vectors
+#This sets up our correct X and y vectors
 for i in range(time_steps, int(len(dataset_scaled))):
-    X.append(dataset_scaled[i-time_steps:i,1:features]) #dataset_scaled
-    y.append(dataset_scaled[i,0]) #dataset_scaled
+    X.append(dataset_scaled[i-time_steps:i,0:19])           #dataset_scaled features
+    y.append(dataset_scaled[i,0])                           #dataset_scaled
 
 X, y = np.array(X), np.array(y)
 X = np.reshape(X, (X.shape[0], X.shape[1], features-1))
