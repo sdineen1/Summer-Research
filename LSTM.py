@@ -111,7 +111,7 @@ regressor.fit(X_train, y_train, epochs=epochs, batch_size= batch_size )
 
 test_size = int(np.ceil(len(data)*.2))
 inputs = data[len(data)-test_size-time_steps:]
-inputs = sc.transform(inputs)
+                                                    #inputs = sc.transform(inputs)
 X_test = []
 for i in range (time_steps , len(inputs)):
     X_test.append(inputs[i-time_steps:i, 0:8])
@@ -124,7 +124,8 @@ y_pred = regressor.predict(X_test)
 # =============================================================================
 # Step 6- Exporting the files 
 # =============================================================================
-y = np.concatenate(y_pred, y_test, axis=1)
+y_pred = y_pred[:,0]
+y = np.column_stack((y_pred, y_test))
 filepath = 'LSTMoutput.csv'
 
 df = pd.DataFrame(y)
