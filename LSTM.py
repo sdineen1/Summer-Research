@@ -10,11 +10,12 @@ import math as math
 #data = pd.read_excel('SP500.xlsx')
 
 #data = data.iloc[:,2:].values
+
 #Turning the pandas dataframe into numpy array
-#data = np.array(data) 
 data = pd.read_csv('WaveletOutput.csv', engine= 'python', encoding = 'ASCII' )
 data = np.array(data)
 
+#In the paper, Bao, Yue, and Rao s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
 training_size = int(math.floor(len(data)*.8))
 #cv_size = math.ceil(len(data)*.1)
 #test_size = math.ceil(len(data)*.1)
@@ -111,7 +112,7 @@ regressor.fit(X_train, y_train, epochs=epochs, batch_size= batch_size )
 
 test_size = int(np.ceil(len(data)*.2))
 inputs = data[len(data)-test_size-time_steps:]
-                                                    #inputs = sc.transform(inputs)
+inputs = sc.transform(inputs)
 X_test = []
 for i in range (time_steps , len(inputs)):
     X_test.append(inputs[i-time_steps:i, 0:8])
