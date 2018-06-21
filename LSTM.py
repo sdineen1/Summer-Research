@@ -126,6 +126,8 @@ y_pred = regressor.predict(X_test)
 # Step 6- Exporting the files 
 # =============================================================================
 
+
+
 predict_dataset_like = np.zeros(shape=(len(y_pred), data.shape[1]))
 predict_dataset_like[:,0] = y_pred[:,0]
 real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
@@ -133,8 +135,9 @@ real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
 actual_prices = data[len(data)-len(real_predicted):,0]
 
 
-
 y_pred = y_pred[:,0]
+y = np.column_stack((real_predicted, actual_prices))
+
 y = np.column_stack((y_pred, y_test, real_predicted, actual_prices))
 filepath = 'LSTMoutput.csv'
 

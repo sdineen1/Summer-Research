@@ -73,11 +73,10 @@ def ROI_MAX(actual):
 
 
 output = pd.read_csv('LSTMoutput.csv')
-predicted = output.iloc[:,2].values
-actual = output.iloc[:,3].values
+predicted = output.iloc[:,0].values
+actual = output.iloc[:,1].values
 
 predicted, actual = np.array(predicted), np.array(actual)
 
 roi, portfolio = ROI(predicted=predicted, actual = actual)
 max_roi = ROI_MAX(actual=actual)
-other_roi = ROI_pre_to_pre(predicted=predicted, actual=actual)
