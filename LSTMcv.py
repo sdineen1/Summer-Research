@@ -87,7 +87,7 @@ test_size = int(.25*training_set_size)
 
 correlations = []
 
-'''for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
+for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
     
     X_train = X[i:i+training_set_size, :, :]
     y_train = y[i:i+training_set_size]
@@ -108,7 +108,7 @@ correlations = []
 
 filepath = 'LSTMcorrelations.csv'
 df = pd.DataFrame(correlations)
-df.to_csv(filepath, index=False)'''
+df.to_csv(filepath, index=False)
 X_train_size = int(len(X)*.8)
 
 X_train = X[0:X_train_size,:]
