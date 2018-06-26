@@ -257,10 +257,11 @@ sae2_2.fit(x = output2_1, y = output2_1, batch_size = 60, epochs = 100)
 sae2_1_weights = sae2_1.layers[1].get_weights()
 sae2_2_weights = sae2_2.layers[1].get_weights()
 
-encoding2 = Dense(units = 9, activation = 'sigmoid')(input_shape)
+sae2_input = Input(shape = (data.shape[1], ))
+encoding2 = Dense(units = 9, activation = 'sigmoid')(sae2_input)
 decoding2 = Dense(units = 7, activation = 'sigmoid')
 
-sae2 = Model(input_shape, decoding2)
+sae2 = Model(sae2_input, decoding2)
 
 sae2.layers[1].set_weights(sae2_1_weights)
 sae2.layers[2].set_weights(sae2_2_weights)
