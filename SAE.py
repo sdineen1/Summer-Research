@@ -259,7 +259,7 @@ sae2_2_weights = sae2_2.layers[1].get_weights()
 
 sae2_input = Input(shape = (data.shape[1], ))
 encoding2 = Dense(units = 9, activation = 'sigmoid')(sae2_input)
-decoding2 = Dense(units = 7, activation = 'sigmoid')
+decoding2 = Dense(units = 7, activation = 'sigmoid')(encoding2)
 
 sae2 = Model(sae2_input, decoding2)
 
