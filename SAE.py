@@ -229,7 +229,7 @@ decoding1 = Dense(units = data.shape[1], activation = 'sigmoid')(encoding1)
 
 sae1 = Model(input_shape, decoding1)
 sae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
-sae1.fit(x = X_train_Scaled, y_train = X_train_Scaled, batch_size = 60, epochs = 100)
+sae1.fit(x = X_train_Scaled, y = X_train_Scaled, batch_size = 60, epochs = 100)
 
 hidden_output1 = K.function([sae1.layers[0].input], [sae1.layers[1].output])
 predict1 = hidden_output1([data_scaled])[0]
