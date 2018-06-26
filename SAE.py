@@ -218,10 +218,60 @@ def SAE_one_layer(layers, rho, data, optim, epochs, batch_size):
 
 layers = [18, 22, 26, 30, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72]
 rho = [.5, .25, .125 , .1, .075, .05, .0375, .01875, .009375]
-error = SAE_one_layer(layers=layers, rho = rho, data = data_scaled, optim = 'adam', epochs = 750, batch_size = 60)
 
-filepath = 'SAE_Reconstruction_Error.csv'
-df = pd.DataFrame(error)
+
+#Creating the input shape
+input_shape = Input(shape = (data.shape[1], ))
+
+
+encoding1 = Dense(units = 7, activation = 'sigmoid')(input_shape)
+decoding1 = Dense(units = data.shape[1], activation = 'sigmoid')(encoding1)
+
+sae1 = Model(input_shape, decoding1)
+sae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
+sae1.fit(x = X_train_Scaled, y_train = X_train_Scaled, batch_size = 60, epochs = 100)
+
+hidden_output1 = K.function([sae1.layers[0].input], [sae1.layers[1].output])
+predict1 = hidden_output1([data_scaled])[0]
+#sae1_output = sc.inverse_transform(predict)
+
+
+encoding2_1 = Dense(units = 9, activation = 'sigmoid')(input_shape)
+decoding2_1 = Dense(units  = data.shape[1], activation = 'sigmoid')(encoding2_1)
+
+sae2_1 = Model(input_shape, decoding2_1)
+sae2_1.compile(optimizer = 'adam', loss = 'mean_squared_error')
+sae2_1.fit(x = X_train_Scaled, y = X_train_Scaled, batch_size = 60, epochs = 100)
+
+hidden_output2_1 = K.function([sae2_1.layers[0].input], [sae2_1.layers[1].output])
+output2_1 = hidden_output2_1([X_train_Scaled])[0]
+
+input_second_hlayer = Input(shape = (output2_1.shape[1], ))
+encoding2_2 = Dense(units = 7, activation = 'sigmoid')(input_second_hlayer)
+decoding2_2 = Dense(units = output2_1.shape[1], activation = 'sigmoid')(encoding2_2)
+
+sae2_2 = Model(input_second_hlayer, decoding2_2)
+sae2_2.compile(optimizer = 'adam', loss = 'mean_squared_error')
+sae2_2.fit(x = output2_1, y = output2_1, batch_size = 60, epochs = 100)
+
+sae2_1_weights = sae2_1.layers[1].get_weights()
+sae2_2_weights = sae2_2.layers[1].get_weights()
+
+encoding2 = Dense(units = 9, activation = 'sigmoid')(input_shape)
+decoding2 = Dense(units = 7, activation = 'sigmoid')
+
+sae2 = Model(input_shape, decoding2)
+
+sae2.layers[1].set_weights(sae2_1_weights)
+sae2.layers[2].set_weights(sae2_2_weights)
+
+predict2 = sae2.predict(data_scaled)
+
+y = np.column_stack((predict1, predict2))
+
+
+filepath = 'SAEoutput.csv'
+df = pd.DataFrame(y)
 df.to_csv(filepath, index=False)
             
             

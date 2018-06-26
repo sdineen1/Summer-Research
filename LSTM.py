@@ -126,7 +126,7 @@ y_pred = regressor.predict(X_test)
 # Step 6- Exporting the files 
 # =============================================================================
 
-
+y_pred = np.array(y_pred)
 
 predict_dataset_like = np.zeros(shape=(len(y_pred), data.shape[1]))
 predict_dataset_like[:,0] = y_pred[:,0]
@@ -144,5 +144,6 @@ filepath = 'LSTMoutput.csv'
 df = pd.DataFrame(y)
 
 df.to_csv(filepath, index=False)
+
 
 

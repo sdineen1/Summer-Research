@@ -9,7 +9,7 @@ Created on Thu Jun 21 08:43:11 2018
 import pandas as pd
 import numpy as np
 import math as math
-
+#6.95 fee
 def ROI(predicted, actual):
     
     #Portfolio is an arbitrary amount of money
@@ -71,10 +71,41 @@ def ROI_MAX(actual):
     ROI = portfolio/100000
     return ROI
 
+def MAPE(y_true, y_pred): 
+    
+    temp = []
+    for i in range(len(y_true)):
+        temp.append(math.fabs((y_true[i]-y_pred[i])/y_true[i]))
+    temp = np.array(temp)
+    summation = np.sum(temp)
+    mape = (100/len(y_true))*summation
+        
+    return mape
 
-output = pd.read_csv('LSTMoutput.csv')
+def SMAPE(y_true, y_pred):
+    #SMAPE is considered to be a better metric for forcasting than MAPE because MAPE penalizes predictions that are greater than the actual value
+    #For example, when the predicted value is 150 and the forecast is 100, MAPE =33.33%, while when the predicted value is 100 and the forecast is 150 MAPE =50% despite the fact that both forecasts are wrong by 50 units!
+    temp = []
+    for i in range(len(y_true)):
+        numerator = math.fabs(y_pred[i]-y_true[i])
+        denominator = (math.fabs(y_true[i])+math.fabs(y_pred[i]))/2
+        temp.append(numerator/denominator)
+    temp = np.array(temp)
+    summation = np.sum(temp)
+    smape = (100/len(y_true))*summation
+    
+    return smape
+
+from sklearn.metrics import mean_absolute_error
+
+#output = pd.read_csv('LSTMoutput.csv')
+output = pd.read_excel('holdingWorksheet.xlsx')
 predicted = output.iloc[:,0].values
 actual = output.iloc[:,1].values
+predicted, actual = np.array(predicted), np.array(actual)
+mae = mean_absolute_error(actual,predicted)
+mape = MAPE(y_true = actual, y_pred = predicted)
+smape = SMAPE(y_true = actual, y_pred = predicted)
 
 predicted, actual = np.array(predicted), np.array(actual)
 
