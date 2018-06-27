@@ -155,7 +155,7 @@ for i in range(0,features):
 
 
 
-
+correlations = np.array(correlations)
 filepath = 'LSTMcorrelations.csv'
 df = pd.DataFrame(correlations)
 df.to_csv(filepath, index=False)
