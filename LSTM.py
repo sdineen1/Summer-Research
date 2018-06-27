@@ -12,11 +12,11 @@ import math as math
 #data = data.iloc[:,2:].values
 
 #Turning the pandas dataframe into numpy array
-data = pd.read_csv('WaveletOutput.csv', engine= 'python', encoding = 'ASCII' )
+data = pd.read_csv('SAEoutput.csv', engine= 'python', encoding = 'ASCII' )
 data = np.array(data)
 
 #In the paper, Bao, Yue, and Rao s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
-training_size = int(math.floor(len(data)*.8))
+training_size = int(math.floor(len(data)*.6)) #going to use .6 because i trained the SAE on 60% of the data
 #cv_size = math.ceil(len(data)*.1)
 #test_size = math.ceil(len(data)*.1)
 
