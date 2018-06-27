@@ -44,8 +44,8 @@ time_steps = 90 #arbitraily set the # of timesteps to 60.  The paper does not sp
 #based on  the way they trained their model the # number of time_steps that they used is between 0 and 720 (not very helpful)
 
 for i in range (time_steps, len(training_set_scaled)):
-    X_train.append(training_set_scaled[i-time_steps:i, 0:8])   #training_set_scaled
-    y_train.append(training_set_scaled[i, 0])                   #training_set_scaled
+    X_train.append(training_set_scaled[i-time_steps:i, 8:16])   #training_set_scaled
+    y_train.append(training_set_scaled[i, 8])                   #training_set_scaled
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
@@ -115,10 +115,10 @@ inputs = data[len(data)-test_size-time_steps:]
 inputs = sc.transform(inputs)
 X_test = []
 for i in range (time_steps , len(inputs)):
-    X_test.append(inputs[i-time_steps:i, 0:8])
+    X_test.append(inputs[i-time_steps:i, 8:16])
     
 X_test = np.array(X_test)
-y_test = inputs[time_steps:len(inputs),0]
+y_test = inputs[time_steps:len(inputs),8]
 
 y_pred = regressor.predict(X_test)
 
