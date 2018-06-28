@@ -122,7 +122,7 @@ def sliding_window(X, y, train_size, test_size):
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 50 , batch_size = 60)
+        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 1 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
         predicted = predicted[:,0]
@@ -145,7 +145,9 @@ correlations = []
 for i in range(0,features):
     
     X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=i)
-    training_set_size = int(len(X)*.25)
+    #training_set_size = int(len(X)*.25)
+    #test_size = int(.25*training_set_size)
+    training_set_size = int(len(X)*.8)
     test_size = int(.25*training_set_size)
 
     correlation, predictions, actual_price = sliding_window(X=X,y=y, train_size = training_set_size, test_size = test_size)
@@ -156,6 +158,7 @@ for i in range(0,features):
 
 
 correlations = np.array(correlations)
+correlations = np.reshape(correlations, newshape=-1)
 filepath = 'LSTMcorrelations.csv'
 df = pd.DataFrame(correlations)
 df.to_csv(filepath, index=False)
