@@ -163,6 +163,7 @@ for i in range(0,2):
         regressor = compile_regressor(units = 50, shape = X_train, dropout_rate=.2, optim= 'adam')
         regressor = train_regressor(compiled_regressor = regressor , X_train = X_train, y_train = y_train, epochs = 1, batch_size=60)
         predict = regressor.predict(X_test)
+        predict = predict[:,0]
         correlation = np.corrcoef(predict, y_test)
         correl.append(correlation)
     
