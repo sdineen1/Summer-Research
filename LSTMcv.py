@@ -137,33 +137,50 @@ def sliding_window(X, y, train_size, test_size):
 
 
 
+
+
 time_steps = 90
 features = int(dataset_scaled.shape[1])
+#training_set_size = int(len(X)*.25) - correct train and test sizes used by Bao, Yue, and Rao. two years is 25% of the data
+#test_size = int(.25*training_set_size) - correct train and test sizes used by Bao, Yue, and Rao. 25% of two year is 6 months of test 
 
-
-correlations = []
-#for i in range(0,4): 
+num_repeats = 3
+correlations = np.zeros(shape = (num_repeats, features))
+for i in range(0,2): 
     
-X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=0)
-    #training_set_size = int(len(X)*.25)
-    #test_size = int(.25*training_set_size)
-training_set_size = int(len(X)*.50)
-test_size = int(.25*training_set_size)
-
-correlation, predictions, actual_price = sliding_window(X=X,y=y, train_size = training_set_size, test_size = test_size)
-#correlations.append(correlation)
+    X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=i)
+    training_set_size = int(len(X)*.80)
+    test_size = int(.2*training_set_size)
+    
+    X_train = X[0:training_set_size, :, :]
+    y_train = y[0:training_set_size]
+    X_test = X[training_set_size:len(X), :, :]
+    y_test = y[training_set_size: len(y) + test_size]
+    
+    correl = []
+    for j in range(0,num_repeats):
+        
+        regressor = compile_regressor(units = 50, shape = X_train, dropout_rate=.2, optim= 'adam')
+        regressor = train_regressor(compiled_regressor = regressor , X_train = X_train, y_train = y_train, epochs = 1, batch_size=60)
+        predict = regressor.predict(X_test)
+        correlation = np.corrcoef(predict, y_test)
+        correl.append(correlation)
+    
+    correl = np.array(correl)
+    correlations[:,i] = correl
+    
+    
     
 
 
 
 
-correlation = np.array(correlation)
-correlation = np.reshape(correlation, newshape=-1)
+
 filepath = 'LSTMcorrelations.csv'
-df = pd.DataFrame(correlation)
+df = pd.DataFrame(correlations)
 df.to_csv(filepath, index=False)
 
-'''X_train_size = int(len(X)*.8)7
+'''X_train_size = int(len(X)*.8)
 
 X_train = X[0:X_train_size,:]
 y_train = y[0:X_train_size]
