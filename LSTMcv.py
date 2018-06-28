@@ -155,7 +155,7 @@ for i in range(0,2):
     X_train = X[0:training_set_size, :, :]
     y_train = y[0:training_set_size]
     X_test = X[training_set_size:len(X), :, :]
-    y_test = y[training_set_size: len(y) + test_size]
+    y_test = y[training_set_size: len(y)]
     
     correl = []
     for j in range(0,num_repeats):
