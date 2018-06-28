@@ -158,7 +158,7 @@ for i in range(0,2): #features
 
 
 correlations = np.array(correlations)
-#correlations = np.reshape(correlations, newshape=-1)
+correlations = np.reshape(correlations, newshape=-1)
 filepath = 'LSTMcorrelations.csv'
 df = pd.DataFrame(correlations)
 df.to_csv(filepath, index=False)
