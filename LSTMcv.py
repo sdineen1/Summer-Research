@@ -146,7 +146,7 @@ features = int(dataset_scaled.shape[1])
 
 num_repeats = 3
 correlations = np.zeros(shape = (num_repeats, features))
-for i in range(0,2): 
+for i in range(0,features): 
     
     X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=i)
     training_set_size = int(len(X)*.80)
@@ -159,9 +159,10 @@ for i in range(0,2):
     
     correl = []
     for j in range(0,num_repeats):
-        
+        print(i)
+        print(j)
         regressor = compile_regressor(units = 50, shape = X_train, dropout_rate=.2, optim= 'adam')
-        regressor = train_regressor(compiled_regressor = regressor , X_train = X_train, y_train = y_train, epochs = 1, batch_size=60)
+        regressor = train_regressor(compiled_regressor = regressor , X_train = X_train, y_train = y_train, epochs = 50, batch_size=60)
         predict = regressor.predict(X_test)
         predict = predict[:,0]
         correlation = np.corrcoef(predict, y_test)
@@ -169,7 +170,7 @@ for i in range(0,2):
     
     correl = np.array(correl)
     correl = np.reshape(correl, newshape = (3,-1))
-    correlations[:,i] = correl[:,2]
+    correlations[:,i] = correl[:,1]
     
     
     
