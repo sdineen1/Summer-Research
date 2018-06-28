@@ -147,7 +147,7 @@ for i in range(0,2): #features
     X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=i)
     #training_set_size = int(len(X)*.25)
     #test_size = int(.25*training_set_size)
-    training_set_size = int(len(X)*.8)
+    training_set_size = int(len(X)*.7)
     test_size = int(.25*training_set_size)
 
     correlation, predictions, actual_price = sliding_window(X=X,y=y, train_size = training_set_size, test_size = test_size)
