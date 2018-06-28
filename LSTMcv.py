@@ -168,7 +168,7 @@ for i in range(0,2):
         correl.append(correlation)
     
     correl = np.array(correl)
-    correl = np.reshape(shape = (3,0))
+    correl = np.reshape(newshape = (3,0))
     correlations[:,i] = correl
     
     
