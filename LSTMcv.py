@@ -142,7 +142,7 @@ features = int(dataset_scaled.shape[1])
 
 
 correlations = []
-for i in range(0,features):
+for i in range(0,2): #features
     
     X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=i)
     #training_set_size = int(len(X)*.25)
