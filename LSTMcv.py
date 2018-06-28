@@ -142,16 +142,16 @@ features = int(dataset_scaled.shape[1])
 
 
 correlations = []
-for i in range(0,4): 
+#for i in range(0,4): 
     
-    X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=i)
+X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=0)
     #training_set_size = int(len(X)*.25)
     #test_size = int(.25*training_set_size)
-    training_set_size = int(len(X)*.50)
-    test_size = int(.25*training_set_size)
+training_set_size = int(len(X)*.50)
+test_size = int(.25*training_set_size)
 
-    correlation, predictions, actual_price = sliding_window(X=X,y=y, train_size = training_set_size, test_size = test_size)
-    correlations.append(correlation)
+correlation, predictions, actual_price = sliding_window(X=X,y=y, train_size = training_set_size, test_size = test_size)
+#correlations.append(correlation)
     
 
 
@@ -160,7 +160,7 @@ for i in range(0,4):
 correlations = np.array(correlations)
 correlations = np.reshape(correlations, newshape=-1)
 filepath = 'LSTMcorrelations.csv'
-df = pd.DataFrame(correlations)
+df = pd.DataFrame(correlation)
 df.to_csv(filepath, index=False)
 
 '''X_train_size = int(len(X)*.8)7
