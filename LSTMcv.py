@@ -157,7 +157,7 @@ correlation, predictions, actual_price = sliding_window(X=X,y=y, train_size = tr
 
 
 
-correlation = np.array(correlations)
+correlation = np.array(correlation)
 correlation = np.reshape(correlation, newshape=-1)
 filepath = 'LSTMcorrelations.csv'
 df = pd.DataFrame(correlation)
