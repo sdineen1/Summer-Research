@@ -151,14 +151,14 @@ for i in range(0,features):
     test_size = int(.25*training_set_size)
 
     correlation, predictions, actual_price = sliding_window(X=X,y=y, train_size = training_set_size, test_size = test_size)
-    correlations.append([correlation])
+    correlations.append(correlation)
     
 
 
 
 
 correlations = np.array(correlations)
-correlations = np.reshape(correlations, newshape=-1)
+#correlations = np.reshape(correlations, newshape=-1)
 filepath = 'LSTMcorrelations.csv'
 df = pd.DataFrame(correlations)
 df.to_csv(filepath, index=False)
