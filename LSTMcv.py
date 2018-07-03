@@ -153,12 +153,19 @@ X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset_scaled, num_fe
 training_set_size = 1500
 test_set_size = 500
 
-correlations, predictions, actual_price = sliding_window(X = X, y = y, train_size = training_set_size, test_size = test_set_size)
-predictions, actual_price = np.array(predictions), np.array(actual_price)
-real_predicted, real_actual_price = sc.inverse_transform(predictions), sc.inverse_transform(actual_price)
-real_predicted, real_actual_price = real_predicted[:,0], real_actual_price[:,0]
+correlations, y_hat, y = sliding_window(X = X, y = y, train_size = training_set_size, test_size = test_set_size)
+y_hat, y = np.array(y_hat), np.array(y)
+y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 
-y = np.column_stack(real_predicted, real_actual_price)
+predict_dataset_like = np.zeros(shape=(len(y_hat), dataset.shape[1]))
+predict_dataset_like[:,0] = y_hat[:,0]
+real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
+
+actual_prices = dataset[len(dataset)-len(real_predicted):,0]
+
+actual_prices, real_predicted = actual_prices[:,0], real_predicted[:,0]
+
+y = np.column_stack(real_predicted, actual_prices)
 
 filepath = 'Data/LSTMoutput.csv'
 df = pd.DataFrame(y)
