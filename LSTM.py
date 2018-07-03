@@ -12,11 +12,13 @@ import math as math
 #data = data.iloc[:,2:].values
 
 #Turning the pandas dataframe into numpy array
-data = pd.read_csv('SAEoutput.csv', engine= 'python', encoding = 'ASCII' )
+data = pd.read_csv('Data/ValidationDataWithoutUSDX.csv', engine= 'python', encoding = 'ASCII')
+data = data.iloc[:,1:].values
 data = np.array(data)
+data = data[0:2516,:]
 
 #In the paper, Bao, Yue, and Rao s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
-training_size = int(math.floor(len(data)*.8)) #going to use .6 because i trained the SAE on 60% of the data
+training_size = int(math.floor(len(data)*.7)) #going to use .6 because i trained the SAE on 60% of the data
 #cv_size = math.ceil(len(data)*.1)
 #test_size = math.ceil(len(data)*.1)
 
@@ -44,12 +46,12 @@ time_steps = 90 #arbitraily set the # of timesteps to 60.  The paper does not sp
 #based on  the way they trained their model the # number of time_steps that they used is between 0 and 720 (not very helpful)
 
 for i in range (time_steps, len(training_set_scaled)):
-    X_train.append(training_set_scaled[i-time_steps:i, 8:16])   #training_set_scaled
-    y_train.append(training_set_scaled[i, 8])                   #training_set_scaled
+    X_train.append(training_set_scaled[i-time_steps:i, :])   #training_set_scaled
+    y_train.append(training_set_scaled[i, 0])                   #training_set_scaled
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
-X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 8)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
+X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 23)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
 
 
 # =============================================================================
@@ -65,7 +67,7 @@ dropout_rate =.2 #Arbitrarily set dropout rate to .2.
 regressor = Sequential()
 
 #Adding the first LSTM layer
-regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 8)))
+regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 23)))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the second LSTM layer
@@ -110,15 +112,15 @@ regressor.fit(X_train, y_train, epochs=epochs, batch_size= batch_size )
 # Step 5- Predictions
 # =============================================================================
 
-test_size = int(np.ceil(len(data)*.2))
+test_size = int(len(data)-training_size)
 inputs = data[len(data)-test_size-time_steps:]
 inputs = sc.transform(inputs)
 X_test = []
 for i in range (time_steps , len(inputs)):
-    X_test.append(inputs[i-time_steps:i, 8:16])
+    X_test.append(inputs[i-time_steps:i, :])
     
 X_test = np.array(X_test)
-y_test = inputs[time_steps:len(inputs),8]
+y_test = inputs[time_steps:len(inputs),0]
 
 y_pred = regressor.predict(X_test)
 
