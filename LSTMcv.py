@@ -163,7 +163,7 @@ real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
 
 actual_prices = dataset[len(dataset)-len(real_predicted):,0]
 
-y = np.column_stack(real_predicted, actual_prices)
+y = np.column_stack((real_predicted, actual_prices))
 
 filepath = 'Data/LSTMoutput.csv'
 df = pd.DataFrame(y)
