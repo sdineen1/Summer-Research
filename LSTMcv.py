@@ -123,7 +123,7 @@ def sliding_window(X, y, train_size, test_size):
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 1 , batch_size = 60)
+        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
         predicted = predicted[:,0]
@@ -147,7 +147,7 @@ features = int(dataset_scaled.shape[1])
 
 
 
-X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset_scaled, num_feature = features) 
+X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset, num_feature = features) 
 #training_set_size = int(len(X)*.80)
 #test_size = int(.2*training_set_size)
 
