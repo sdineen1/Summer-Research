@@ -114,7 +114,8 @@ def sliding_window(X, y, train_size, test_size):
     #This is the sliding-window for-loop.  The for-loop starts at 0 and goes to legnth of X minus the size of the additive total of the size of the trainign and sets
     #i is then incremented by the size of the test set
     for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
-    
+        
+        print(i)
         X_train = X[i:i+training_set_size, :, :]
         y_train = y[i:i+training_set_size]
         X_test = X[i+training_set_size:i+training_set_size+test_size, :, :]
@@ -122,7 +123,7 @@ def sliding_window(X, y, train_size, test_size):
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 1 , batch_size = 60)
+        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
         predicted = predicted[:,0]
