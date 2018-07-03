@@ -99,7 +99,7 @@ def SMAPE(y_true, y_pred):
 from sklearn.metrics import mean_absolute_error
 
 #output = pd.read_csv('LSTMoutput.csv')
-output = pd.read_excel('holdingWorksheet.xlsx')
+output = pd.read_excel('temp.xlsx')
 predicted = output.iloc[:,0].values
 actual = output.iloc[:,1].values
 predicted, actual = np.array(predicted), np.array(actual)

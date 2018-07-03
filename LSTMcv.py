@@ -11,14 +11,14 @@ Created on Fri Jun  8 11:52:34 2018
 import numpy as np
 import pandas as pd
 
-dataset = pd.read_excel('SP500.xlsx')
+#dataset = pd.read_excel('SP500.xlsx')
 #dataset = pd.read_csv('WaveletOutput.csv')
-dataset = dataset.iloc[:,2:].values
+dataset = pd.read_csv('Data/ValidationDataWithoutUSDX.csv')
+dataset = dataset.iloc[:,1:].values
+
+null = pd.isnull(dataset[:,0])
 
 #dataset = np.array(dataset)
-
-
-
 
 # =============================================================================
 # Scaling the dataset
@@ -122,7 +122,7 @@ def sliding_window(X, y, train_size, test_size):
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 50 , batch_size = 60)
+        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
         predicted = predicted[:,0]
@@ -144,43 +144,24 @@ features = int(dataset_scaled.shape[1])
 #training_set_size = int(len(X)*.25) - correct train and test sizes used by Bao, Yue, and Rao. two years is 25% of the data
 #test_size = int(.25*training_set_size) - correct train and test sizes used by Bao, Yue, and Rao. 25% of two year is 6 months of test 
 
-num_repeats = 3
-correlations = np.zeros(shape = (num_repeats, features))
-for i in range(0,features): 
-    
-    X, y = X_y_variable_selection(time_steps=time_steps, data_scaled=dataset_scaled, num_feature = features, index_of_variable=i)
-    training_set_size = int(len(X)*.80)
-    test_size = int(.2*training_set_size)
-    
-    X_train = X[0:training_set_size, :, :]
-    y_train = y[0:training_set_size]
-    X_test = X[training_set_size:len(X), :, :]
-    y_test = y[training_set_size: len(y)]
-    
-    correl = []
-    for j in range(0,num_repeats):
-        print(i)
-        print(j)
-        regressor = compile_regressor(units = 50, shape = X_train, dropout_rate=.2, optim= 'adam')
-        regressor = train_regressor(compiled_regressor = regressor , X_train = X_train, y_train = y_train, epochs = 50, batch_size=60)
-        predict = regressor.predict(X_test)
-        predict = predict[:,0]
-        correlation = np.corrcoef(predict, y_test)
-        correl.append(correlation)
-    
-    correl = np.array(correl)
-    correl = np.reshape(correl, newshape = (3,-1))
-    correlations[:,i] = correl[:,1]
-    
-    
-    
 
 
+X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset_scaled, num_feature = features) 
+#training_set_size = int(len(X)*.80)
+#test_size = int(.2*training_set_size)
 
+training_set_size = 1500
+test_set_size = 500
 
+correlations, predictions, actual_price = sliding_window(X = X, y = y, train_size = training_set_size, test_size = test_set_size)
+predictions, actual_price = np.array(predictions), np.array(actual_price)
+real_predicted, real_actual_price = sc.inverse_transform(predictions), sc.inverse_transform(actual_price)
+real_predicted, real_actual_price = real_predicted[:,0], real_actual_price[:,0]
 
-filepath = 'LSTMcorrelations.csv'
-df = pd.DataFrame(correlations)
+y = np.column_stack(real_predicted, real_actual_price)
+
+filepath = 'Data/LSTMoutput.csv'
+df = pd.DataFrame(y)
 df.to_csv(filepath, index=False)
 
 '''X_train_size = int(len(X)*.8)
