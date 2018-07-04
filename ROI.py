@@ -137,10 +137,10 @@ def SMAPE(y_true, y_pred):
 
 from sklearn.metrics import mean_absolute_error
 
-output = pd.read_csv('Data/LSTMoutput.csv')
+output = pd.read_csv('LSTMoutput.csv')
 #output = pd.read_excel('temp.xlsx')
-predicted = output.iloc[:,0].values
-actual = output.iloc[:,1].values
+predicted = output.iloc[:,2].values
+actual = output.iloc[:,3].values
 predicted, actual = np.array(predicted), np.array(actual)
 mae = mean_absolute_error(actual,predicted)
 mape = MAPE(y_true = actual, y_pred = predicted)
@@ -148,5 +148,6 @@ smape = SMAPE(y_true = actual, y_pred = predicted)
 
 predicted, actual = np.array(predicted), np.array(actual)
 
-roi, portfolio = ROI_Predict_only(predicted=predicted, actual = actual)
+roi_predict_only, portfolio_p = ROI_Predict_only(predicted=predicted, actual = actual)
+roi , oredicted = ROI(predicted = predicted, actual = actual)
 max_roi = ROI_MAX(actual=actual)

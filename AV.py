@@ -229,3 +229,19 @@ tnx_request = requests.get(url = API_URL, params = tnx)
 with open(tnx_file, 'w') as oF:
     oF.write(tnx_request.text)
 
+vix = {
+    "function" : "TIME_SERIES_DAILY",
+    "symbol" : "VIX",
+    "outputsize" : "full",
+    "datatype" : "csv",
+    "apikey" : "0ZSSUD2LJQV6MK6M",
+    }
+
+
+vix_file = 'Data/VIX.csv'
+
+vix_request = requests.get(url = API_URL, params = vix)
+
+with open(vix_file, 'w') as oF:
+    oF.write(vix_request.text)
+
