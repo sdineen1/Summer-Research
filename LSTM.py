@@ -13,7 +13,7 @@ import math as math
 
 #Turning the pandas dataframe into numpy array
 data = pd.read_csv('Data/ValidationWaveletOutput.csv', engine= 'python', encoding = 'ASCII')
-data = data.iloc[:,1:].values
+data = data.iloc[:,:].values
 data = np.array(data)
 data = data[0:2516,:]
 
@@ -51,7 +51,7 @@ for i in range (time_steps, len(training_set_scaled)):
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
-X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 8)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
+X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 9)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
 
 
 # =============================================================================
@@ -67,7 +67,7 @@ dropout_rate =.2 #Arbitrarily set dropout rate to .2.
 regressor = Sequential()
 
 #Adding the first LSTM layer
-regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 8)))
+regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 9)))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the second LSTM layer
