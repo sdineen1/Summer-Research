@@ -7,15 +7,15 @@ import numpy as np
 import pandas as pd
 import math as math
 
-data = pd.read_excel('SP500FeatureSelection.xlsx')
+data = pd.read_csv('SP500FeatureSelection.csv')
 
 #data = data.iloc[:,2:].values
 
 #Turning the pandas dataframe into numpy array
 #data = pd.read_csv('Data/ValidationWaveletOutput.csv', engine= 'python', encoding = 'ASCII')
-data = data.iloc[:,2:].values
+data = data.iloc[:,1:].values
 data = np.array(data)
-#data = data[0:2516,:]
+data = data[0:2516,:]
 
 #In the paper, Bao, Yue, and Rao s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
 training_size = int(math.floor(len(data)*.8)) #going to use .6 because i trained the SAE on 60% of the data
@@ -51,7 +51,7 @@ for i in range (time_steps, len(training_set_scaled)):
 
 X_train , y_train = np.array(X_train), np.array(y_train) #Transforiming the list objects into numpy arrays 
 
-X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 9)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
+X_train = np.reshape(X_train , (X_train.shape[0], X_train.shape[1], 10)) #Reshaping into a 3rd degree tensor that the Keras LSTM expects
 
 
 # =============================================================================
@@ -67,7 +67,7 @@ dropout_rate =.2 #Arbitrarily set dropout rate to .2.
 regressor = Sequential()
 
 #Adding the first LSTM layer
-regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 9)))
+regressor.add(LSTM(units = 200, return_sequences=True, input_shape = (X_train.shape[1], 10)))
 regressor.add(Dropout(dropout_rate))
 
 #Adding the second LSTM layer

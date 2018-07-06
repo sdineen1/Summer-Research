@@ -151,3 +151,4 @@ predicted, actual = np.array(predicted), np.array(actual)
 roi_predict_only, portfolio_p = ROI_Predict_only(predicted=predicted, actual = actual)
 roi , oredicted = ROI(predicted = predicted, actual = actual)
 max_roi = ROI_MAX(actual=actual)
+
