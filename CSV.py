@@ -331,3 +331,29 @@ filepath = 'Data/wvad.csv'
 wvadDF = pd.DataFrame(wvad)
 
 wvadDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# Converting RSI JSON File to CSV
+# =============================================================================
+
+rsi_list = []
+with open('Data/rsi.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'Data/rsi.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)

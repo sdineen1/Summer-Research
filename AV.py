@@ -245,3 +245,17 @@ vix_request = requests.get(url = API_URL, params = vix)
 with open(vix_file, 'w') as oF:
     oF.write(vix_request.text)
 
+rsi= {
+       'function' : 'RSI',
+       'symbol' : '^GSPC',
+       'interval' : 'daily',
+       'time_period' : '14',
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+rsi_file = 'Data/rsi.json'
+rsi_request = requests.get(url = API_URL, params = rsi)
+
+with open(rsi_file, 'w') as oF:
+    oF.write(rsi_request.text)
+
