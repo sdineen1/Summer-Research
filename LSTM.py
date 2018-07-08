@@ -13,7 +13,7 @@ data = pd.read_csv('Data/ValidationWaveletOutput.csv')
 
 #Turning the pandas dataframe into numpy array
 #data = pd.read_csv('Data/ValidationWaveletOutput.csv', engine= 'python', encoding = 'ASCII')
-data = data.iloc[:,1:].values
+data = data.iloc[:,:].values
 data = np.array(data)
 data = data[0:2516,:]
 
