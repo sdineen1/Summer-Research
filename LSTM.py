@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import math as math
 
-data = pd.read_excel('Data/UltimateDataSet2000.xlsx')
+data = pd.read_csv('Data/ValidationWaveletOutput.csv')
 
 #data = data.iloc[:,2:].values
 

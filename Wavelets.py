@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 #dataset = pd.read_excel('SP500.xlsx')
-dataset = pd.read_csv('Data/ValidationDataWithoutUSDX.csv')
+dataset = pd.read_excel('Data/UltimateDataSet2000.xlsx')
 dataset = dataset.iloc[:, 1:].values
 
 coeffs = pywt.dwt2(data = dataset, wavelet = 'sym4', axes = (-1,1)) #-1,1 and 1,-1equals 2078,10
