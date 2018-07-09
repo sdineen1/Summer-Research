@@ -276,7 +276,7 @@ def two_hidden_layer_AE(data, X_train):
     
     return output, sae2
 
-output, hidden_output_func = one_hidden_layer_AE(data = data, X_train = X_train)
+output, hidden_output_func = two_hidden_layer_AE(data = data, X_train = X_train)
 
 compressed_data = hidden_output_func([data])[0]
 filepath = 'SAEoutput.csv'
