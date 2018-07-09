@@ -230,7 +230,7 @@ def one_hidden_layer_AE(data, X_train):
     
     sae1 = Model(input_shape, decoding1)
     sae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
-    sae1.fit(x = X_train, y = X_train, batch_size = 60, epochs = 100)
+    sae1.fit(x = X_train, y = X_train, batch_size = 60, epochs = 500)
     
     hidden_output_func = K.function([sae1.layers[0].input], [sae1.layers[1].output])
     output = hidden_output_func([data])[0]
