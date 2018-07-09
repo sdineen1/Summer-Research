@@ -278,9 +278,9 @@ def two_hidden_layer_AE(data, X_train):
 
 output, hidden_output_func = one_hidden_layer_AE(data = data, X_train = X_train)
 
-
+compressed_data = hidden_output_func([data])[0]
 filepath = 'SAEoutput.csv'
-df = pd.DataFrame(output)
+df = pd.DataFrame(compressed_data)
 df.to_csv(filepath, index=False)
             
             
