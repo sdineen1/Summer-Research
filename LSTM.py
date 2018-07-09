@@ -7,19 +7,19 @@ import numpy as np
 import pandas as pd
 import math as math
 
-data = pd.read_excel('Data/UltimateDataSet2000.xlsx')
+#data = pd.read_excel('Data/UltimateDataSet2000.xlsx')
 
 #data = data.iloc[:,2:].values
 
 #Turning the pandas dataframe into numpy array
-#data = pd.read_csv('Data/ValidationWaveletOutput.csv', engine= 'python', encoding = 'ASCII')
+data = pd.read_csv('Data/ValidationWaveletOutput.csv', engine= 'python', encoding = 'ASCII')
 data = data.iloc[:,:].values
 data = np.array(data)
 data = data[0:2516,:]
 
 
 #In the paper, Bao, Yue, and Rao s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
-training_size = int(math.floor(len(data)*.6)) #going to use .6 because i trained the SAE on 60% of the data
+training_size = int(math.floor(len(data)*.5)) #going to use .6 because i trained the SAE on 60% of the data
 #cv_size = math.ceil(len(data)*.1)
 #test_size = math.ceil(len(data)*.1)
 

@@ -238,48 +238,49 @@ def one_hidden_layer_AE(data, X_train):
     return output, hidden_output_func
     #sae1_output = sc.inverse_transform(predict)
     
-def two_hidden_layer_AE(data, X_train):
+#def two_hidden_layer_AE(data, X_train):
     
-    input_shape = Input(shape = (data.shape[1], ))
-    
-    encoding1 = Dense(units = 9, activation = 'sigmoid')(input_shape)
-    decoding1 = Dense(units  = data.shape[1], activation = 'sigmoid')(encoding1)
+input_shape = Input(shape = (data.shape[1], ))
 
-    ae1 = Model(input_shape, decoding1)
-    ae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
-    ae1.fit(x = X_train, y = X_train, batch_size = 60, epochs = 100)
-    
-    hidden_output1 = K.function([ae1.layers[0].input], [ae1.layers[1].output])
-    output1 = hidden_output1([X_train])[0]
-    
-    input_second_hlayer = Input(shape = (output1.shape[1], ))
-    encoding2 = Dense(units = 7, activation = 'sigmoid')(input_second_hlayer)
-    decoding2 = Dense(units = output1.shape[1], activation = 'sigmoid')(encoding2)
-    
-    ae2 = Model(input_second_hlayer, decoding2)
-    ae2.compile(optimizer = 'adam', loss = 'mean_squared_error')
-    ae2.fit(x = output1, y = output1, batch_size = 60, epochs = 100)
-    
-    ae1_weights = ae1.layers[1].get_weights()
-    ae2_weights = ae2.layers[1].get_weights()
-    
-    sae2_input = Input(shape = (data.shape[1], ))
-    encoding2 = Dense(units = 9, activation = 'sigmoid')(sae2_input)
-    decoding2 = Dense(units = 7, activation = 'sigmoid')(encoding2)
-    
-    sae2 = Model(sae2_input, decoding2)
-    
-    sae2.layers[1].set_weights(ae1_weights)
-    sae2.layers[2].set_weights(ae2_weights)
-    
-    output = sae2.predict(data)
-    
-    return output, sae2
+encoding1 = Dense(units = 9, activation = 'sigmoid')(input_shape)
+decoding1 = Dense(units  = data.shape[1], activation = 'sigmoid')(encoding1)
 
-output, sae = two_hidden_layer_AE(data = data, X_train = X_train)
+ae1 = Model(input_shape, decoding1)
+ae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
+ae1.fit(x = X_train, y = X_train, batch_size = 60, epochs = 100)
+
+hidden_output1 = K.function([ae1.layers[0].input], 
+                            [ae1.layers[1].output])
+output1 = hidden_output1([X_train])[0]
+
+input_second_hlayer = Input(shape = (output1.shape[1], ))
+encoding2 = Dense(units = 7, activation = 'sigmoid')(input_second_hlayer)
+decoding2 = Dense(units = output1.shape[1], activation = 'sigmoid')(encoding2)
+
+ae2 = Model(input_second_hlayer, decoding2)
+ae2.compile(optimizer = 'adam', loss = 'mean_squared_error')
+ae2.fit(x = output1, y = output1, batch_size = 60, epochs = 100)
+
+ae1_weights = ae1.layers[1].get_weights()
+ae2_weights = ae2.layers[1].get_weights()
+
+sae2_input = Input(shape = (data.shape[1], ))
+encoding2 = Dense(units = 9, activation = 'sigmoid')(sae2_input)
+decoding2 = Dense(units = 7, activation = 'sigmoid')(encoding2)
+
+sae2 = Model(sae2_input, decoding2)
+
+sae2.layers[1].set_weights(ae1_weights)
+sae2.layers[2].set_weights(ae2_weights)
+
+output = sae2.predict(data)
+    
+    #return output, sae2
+
+#output, sae = two_hidden_layer_AE(data = data, X_train = X_train)
 
 #compressed_data = hidden_output_func([data])[0]
-outputs = sae.predict(data)
+outputs = sae2.predict(data)
 filepath = 'SAEoutput.csv'
 df = pd.DataFrame(outputs)
 df.to_csv(filepath, index=False)
