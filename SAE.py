@@ -24,14 +24,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from math import sqrt
 
-X_train, X_test = train_test_split(data, test_size=.4, random_state=None )
+X_train, X_test = train_test_split(data, test_size=.5, random_state=None )
 
 #Normalizing the data
-'''sc = MinMaxScaler(feature_range=(0,1)) #not going to scale the data
+sc = MinMaxScaler(feature_range=(0,1)) #not going to scale the data
 
 X_train_Scaled = sc.fit_transform(X_train)
 X_test_Scaled = sc.transform(X_test)
-data_scaled = sc.transform(data)'''
+data_scaled = sc.transform(data)
 
 # =============================================================================
 # Building the SAE
@@ -240,7 +240,7 @@ def one_hidden_layer_AE(data, X_train):
     
 #def two_hidden_layer_AE(data, X_train):
     
-input_shape = Input(shape = (data.shape[1], ))
+'''input_shape = Input(shape = (data.shape[1], ))
 
 encoding1 = Dense(units = 9, activation = 'sigmoid')(input_shape)
 decoding1 = Dense(units  = data.shape[1], activation = 'sigmoid')(encoding1)
@@ -248,6 +248,7 @@ decoding1 = Dense(units  = data.shape[1], activation = 'sigmoid')(encoding1)
 ae1 = Model(input_shape, decoding1)
 ae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
 ae1.fit(x = X_train, y = X_train, batch_size = 60, epochs = 100)
+ae1_predict = ae1.predict(data)
 
 hidden_output1 = K.function([ae1.layers[0].input], 
                             [ae1.layers[1].output])
@@ -273,8 +274,17 @@ sae2 = Model(sae2_input, decoding2)
 sae2.layers[1].set_weights(ae1_weights)
 sae2.layers[2].set_weights(ae2_weights)
 
-output = sae2.predict(data)
-    
+output = sae2.predict(data)'''
+
+from keras.models import Sequential
+
+ae1 = Sequential()
+ae1.add(Dense(units = 7, input_shape = (X_train.shape[1], ), activation = 'sigmoid'))
+ae1.add(Dense(units = X_train.shape[1], activation = 'sigmoid'))
+ae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
+ae1.fit(x = X_train, y = X_train, batch_size = 60, epochs = 500)
+
+ae1_predict = ae1.predict(data)
     #return output, sae2
 
 #output, sae = two_hidden_layer_AE(data = data, X_train = X_train)
