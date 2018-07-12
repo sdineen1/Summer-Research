@@ -362,3 +362,109 @@ with open(rsi_spy_file, 'w') as oF:
     oF.write(rsi_spy_request.text)
 
 #ma5 ma10 and RSI
+    
+# =============================================================================
+# IWM
+# =============================================================================
+iwm = {
+    "function" : "TIME_SERIES_DAILY",
+    "symbol" : "IWM",
+    "outputsize" : "full",
+    "datatype" : "csv",
+    "apikey" : "0ZSSUD2LJQV6MK6M",
+    }
+
+
+iwm_file = 'ETF_Opportunity_Set/IWN/iwn.csv'
+
+iwn_request = requests.get(url = API_URL, params = iwm)
+
+with open(iwm_file, 'w') as oF:
+    oF.write(iwn_request.text)
+
+stoch_iwm = {
+        'function' : 'STOCH',
+        'symbol' : 'IWM',
+        'interval' : 'daily',
+        'time_period' : '14', #according to investopedia, 14 is usually used
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+stoch_iwm_request = requests.get(url = API_URL, params = stoch_iwm)
+stoch_iwm_file = 'ETF_Opportunity_Set/IWN/stoch_iwn.json'
+
+with open(stoch_iwm_file, 'w') as oF:
+    oF.write(stoch_iwm_request.text)
+
+ema20_iwm = {
+        'function' : 'EMA',
+        'symbol' : 'IWM',
+        'interval' : 'daily',
+        'time_period' : '20', #what was used in actual paper
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ema20_iwm_request = requests.get(url = API_URL, params = ema20_iwm)
+ema20_iwm_file = 'ETF_Opportunity_Set/IWN/ema20_iwm.json'
+
+with open(ema20_iwm_file, 'w') as oF:
+    oF.write(ema20_iwm_request.text)
+
+ma5_iwm = {
+       'function' : 'sma', 
+       'symbol' : 'IWM',
+       'interval' : 'daily',
+       'time_period' : '5', #what was used in actual paper
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ma5_iwm_request = requests.get(url = API_URL, params = ma5_iwm)
+ma5_iwm_file = 'ETF_Opportunity_Set/IWN/ma5_iwm.json'
+
+with open(ma5_iwm_file, 'w') as oF:
+    oF.write(ma5_iwm_request.text)
+    
+ma10_iwm = {
+       'function' : 'sma', 
+       'symbol' : 'IWM',
+       'interval' : 'daily',
+       'time_period' : '10', #what was used in actual paper
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ma10_iwm_request = requests.get(url = API_URL, params = ma10_iwm)
+ma10_iwm_file = 'ETF_Opportunity_Set/IWN/ma10_iwm.json'
+
+with open(ma10_iwm_file, 'w') as oF:
+    oF.write(ma10_iwm_request.text)
+
+wvad_iwm = {
+        'function' : 'WILLR',
+        'symbol' : 'IWM',
+        'interval' : 'daily',
+        'time_period' : '14', #according to investopedia, 14 is usually used
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+wvad_iwm_request = requests.get(url = API_URL, params = wvad_iwm)
+wvad_iwm_file = 'ETF_Opportunity_Set/IWN/wvad_iwm.json'
+
+with open(wvad_iwm_file, 'w') as oF:
+    oF.write(wvad_iwm_request.text)
+
+
+rsi_iwm= {
+       'function' : 'RSI',
+       'symbol' : 'IWM',
+       'interval' : 'daily',
+       'time_period' : '14',
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+rsi_iwm_file = 'ETF_Opportunity_Set/IWN/rsi_iwm.json'
+rsi_iwm_request = requests.get(url = API_URL, params = rsi_iwm)
+
+with open(rsi_iwm_file, 'w') as oF:
+    oF.write(rsi_iwm_request.text)
+
+
