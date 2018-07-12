@@ -385,7 +385,7 @@ ema20DF.to_csv(filepath, index=False)
 
 
 ma5_list = []
-with open('ETF Opportunity Set/SPY/ma5_spy.json') as data_file:    
+with open('ETF_Opportunity_Set/SPY/ma5_spy.json') as data_file:    
     data = json.load(data_file)
     for tech_analysis in data.values(): #.values()
         for j in tech_analysis:
@@ -400,7 +400,7 @@ for i in range(7, len(ma5_list)):
     
 ma5 = np.array(ma5)
 
-filepath = 'ETF Opportunity Set/SPY/ma5_spy.csv'
+filepath = 'ETF_Opportunity_Set/SPY/ma5_spy.csv'
 
 ma5DF = pd.DataFrame(ma5)
 
@@ -409,7 +409,7 @@ ma5DF.to_csv(filepath, index=False)
 
 
 ma10_list = []
-with open('ETF Opportunity Set/SPY/ma10_spy.json') as data_file:    
+with open('ETF_Opportunity_Set/SPY/ma10_spy.json') as data_file:    
     data = json.load(data_file)
     for tech_analysis in data.values(): #.values()
         for j in tech_analysis:
@@ -424,7 +424,7 @@ for i in range(7, len(ma10_list)):
     
 ma10 = np.array(ma10)
 
-filepath = 'ETF Opportunity Set/SPY/ma10_spy.csv'
+filepath = 'ETF_Opportunity_Set/SPY/ma10_spy.csv'
 
 ma10DF = pd.DataFrame(ma10)
 
@@ -455,7 +455,7 @@ wvadDF.to_csv(filepath, index=False)
 
 
 rsi_list = []
-with open('ETF Opportunity Set/SPY/rsi_spy.json') as data_file:    
+with open('ETF_Opportunity_Set/SPY/rsi_spy.json') as data_file:    
     data = json.load(data_file)
     for tech_analysis in data.values(): #.values()
         for j in tech_analysis:
@@ -470,7 +470,7 @@ for i in range(7, len(rsi_list)):
     
 rsi = np.array(rsi)
 
-filepath = 'ETF Opportunity Set/SPY/rsi_spy.csv'
+filepath = 'ETF_Opportunity_Set/SPY/rsi_spy.csv'
 
 rsiDF = pd.DataFrame(rsi)
 

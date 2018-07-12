@@ -306,28 +306,28 @@ with open(ema20_spy_file, 'w') as oF:
 
 ma5_spy = {
        'function' : 'sma', 
-       'symbol' : '^GSPC',
+       'symbol' : 'SPY',
        'interval' : 'daily',
        'time_period' : '5', #what was used in actual paper
        'series_type' : 'close',
        'apikey' : '0ZSSUD2LJQV6MK6M'}
 
 ma5_spy_request = requests.get(url = API_URL, params = ma5_spy)
-ma5_spy_file = 'ETF Opportunity Set/SPY/ma5_spy.json'
+ma5_spy_file = 'ETF_Opportunity_Set/SPY/ma5_spy.json'
 
 with open(ma5_spy_file, 'w') as oF:
     oF.write(ma5_spy_request.text)
     
 ma10_spy = {
        'function' : 'sma', 
-       'symbol' : '^GSPC',
+       'symbol' : 'SPY',
        'interval' : 'daily',
        'time_period' : '10', #what was used in actual paper
        'series_type' : 'close',
        'apikey' : '0ZSSUD2LJQV6MK6M'}
 
 ma10_spy_request = requests.get(url = API_URL, params = ma10_spy)
-ma10_spy_file = 'ETF Opportunity Set/SPY/ma10_spy.json'
+ma10_spy_file = 'ETF_Opportunity_Set/SPY/ma10_spy.json'
 
 with open(ma10_spy_file, 'w') as oF:
     oF.write(ma10_spy_request.text)
@@ -341,7 +341,7 @@ wvad_spy = {
         'apikey' : '0ZSSUD2LJQV6MK6M'}
 
 wvad_spy_request = requests.get(url = API_URL, params = wvad_spy)
-wvad_spy_file = 'ETF Opportunity Set/SPY/wvad_spy.json'
+wvad_spy_file = 'ETF_Opportunity_Set/SPY/wvad_spy.json'
 
 with open(wvad_spy_file, 'w') as oF:
     oF.write(wvad_spy_request.text)
@@ -349,15 +349,16 @@ with open(wvad_spy_file, 'w') as oF:
 
 rsi_spy= {
        'function' : 'RSI',
-       'symbol' : '^GSPC',
+       'symbol' : 'SPY',
        'interval' : 'daily',
        'time_period' : '14',
        'series_type' : 'close',
        'apikey' : '0ZSSUD2LJQV6MK6M'}
 
-rsi_spy_file = 'ETF Opportunity Set/SPY/rsi_spy.json'
+rsi_spy_file = 'ETF_Opportunity_Set/SPY/rsi_spy.json'
 rsi_spy_request = requests.get(url = API_URL, params = rsi_spy)
 
 with open(rsi_spy_file, 'w') as oF:
     oF.write(rsi_spy_request.text)
-    
+
+#ma5 ma10 and RSI
