@@ -12,7 +12,7 @@ import math as math
 #data = data.iloc[:,2:].values
 
 #Turning the pandas dataframe into numpy array
-data = pd.read_csv('Data/ValidationWaveletOutput.csv', engine= 'python', encoding = 'ASCII')
+data = pd.read_csv('ETF Opportunity Set/SPY/spy_wavelet.csv', engine= 'python', encoding = 'ASCII')
 data = data.iloc[:,1:].values
 data = np.array(data)
 data = data[0:2516,:]

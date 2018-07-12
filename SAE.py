@@ -20,6 +20,7 @@ data = data[0:2516,:]
 # ============================================================================= 
 
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 from math import sqrt
@@ -277,12 +278,14 @@ sae2.layers[2].set_weights(ae2_weights)
 output = sae2.predict(data)'''
 
 from keras.models import Sequential
+from keras.layers import Dropout
 
 ae1 = Sequential()
-ae1.add(Dense(units = 7, input_shape = (X_train.shape[1], ), activation = 'sigmoid'))
-ae1.add(Dense(units = X_train.shape[1], activation = 'sigmoid'))
+ae1.add(Dense(units = 7, input_dim = X_train.shape[1], activation = 'sigmoid'))
+ae1.add(Dense(units = X_train.shape[1], activation = 'linear'))
 ae1.compile(optimizer = 'adam', loss = 'mean_squared_error')
-ae1.fit(x = X_train, y = X_train, batch_size = 60, epochs = 500)
+ae1.fit(x = X_train_Scaled, y = X_train_Scaled, batch_size = 60, epochs = 100)
+
 
 ae1_predict = ae1.predict(data)
     #return output, sae2

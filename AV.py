@@ -258,4 +258,106 @@ rsi_request = requests.get(url = API_URL, params = rsi)
 
 with open(rsi_file, 'w') as oF:
     oF.write(rsi_request.text)
+    
+    
+spy = {
+    "function" : "TIME_SERIES_DAILY",
+    "symbol" : "SPY",
+    "outputsize" : "full",
+    "datatype" : "csv",
+    "apikey" : "0ZSSUD2LJQV6MK6M",
+    }
 
+
+spy_file = 'ETF Opportunity Set/spy.csv'
+
+spy_request = requests.get(url = API_URL, params = spy)
+
+with open(spy_file, 'w') as oF:
+    oF.write(spy_request.text)
+
+stoch_spy = {
+        'function' : 'STOCH',
+        'symbol' : 'SPY',
+        'interval' : 'daily',
+        'time_period' : '14', #according to investopedia, 14 is usually used
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+stoch_spy_request = requests.get(url = API_URL, params = stoch_spy)
+stoch_spy_file = 'ETF Opportunity Set/SPY/stoch_spy.json'
+
+with open(stoch_spy_file, 'w') as oF:
+    oF.write(stoch_spy_request.text)
+
+ema20_spy = {
+        'function' : 'EMA',
+        'symbol' : 'SPY',
+        'interval' : 'daily',
+        'time_period' : '20', #what was used in actual paper
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ema20_spy_request = requests.get(url = API_URL, params = ema20_spy)
+ema20_spy_file = 'ETF Opportunity Set/SPY/ema20_spy.json'
+
+with open(ema20_spy_file, 'w') as oF:
+    oF.write(ema20_spy_request.text)
+
+ma5_spy = {
+       'function' : 'sma', 
+       'symbol' : '^GSPC',
+       'interval' : 'daily',
+       'time_period' : '5', #what was used in actual paper
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ma5_spy_request = requests.get(url = API_URL, params = ma5_spy)
+ma5_spy_file = 'ETF Opportunity Set/SPY/ma5_spy.json'
+
+with open(ma5_spy_file, 'w') as oF:
+    oF.write(ma5_spy_request.text)
+    
+ma10_spy = {
+       'function' : 'sma', 
+       'symbol' : '^GSPC',
+       'interval' : 'daily',
+       'time_period' : '10', #what was used in actual paper
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ma10_spy_request = requests.get(url = API_URL, params = ma10_spy)
+ma10_spy_file = 'ETF Opportunity Set/SPY/ma10_spy.json'
+
+with open(ma10_spy_file, 'w') as oF:
+    oF.write(ma10_spy_request.text)
+
+wvad_spy = {
+        'function' : 'WILLR',
+        'symbol' : 'SPY',
+        'interval' : 'daily',
+        'time_period' : '14', #according to investopedia, 14 is usually used
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+wvad_spy_request = requests.get(url = API_URL, params = wvad_spy)
+wvad_spy_file = 'ETF Opportunity Set/SPY/wvad_spy.json'
+
+with open(wvad_spy_file, 'w') as oF:
+    oF.write(wvad_spy_request.text)
+
+
+rsi_spy= {
+       'function' : 'RSI',
+       'symbol' : '^GSPC',
+       'interval' : 'daily',
+       'time_period' : '14',
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+rsi_spy_file = 'ETF Opportunity Set/SPY/rsi_spy.json'
+rsi_spy_request = requests.get(url = API_URL, params = rsi_spy)
+
+with open(rsi_spy_file, 'w') as oF:
+    oF.write(rsi_spy_request.text)
+    

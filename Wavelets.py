@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 #dataset = pd.read_excel('SP500.xlsx')
-dataset = pd.read_excel('Data/UltimateDataSet2000.xlsx')
+dataset = pd.read_csv('ETF Opportunity Set/SPY/spy.csv')
 dataset = dataset.iloc[:, 1:].values
 
 coeffs = pywt.dwt2(data = dataset, wavelet = 'sym4', axes = (-1,1)) #-1,1 and 1,-1equals 2078,10
@@ -20,7 +20,7 @@ print(coeffs[0].shape)
 coeffs2 = pywt.dwt2(data = coeffs[0], wavelet = 'sym4', axes = (-1, -1))
 print(coeffs2[0].shape)
 
-filepath = 'Data/ValidationWaveletOutput.csv'
+filepath = 'ETF Opportunity Set/SPY/spy_wavelet.csv'
 df = pd.DataFrame(coeffs2[0])
 df.to_csv(filepath, index=False)
 

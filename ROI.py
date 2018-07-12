@@ -135,9 +135,17 @@ def SMAPE(y_true, y_pred):
     
     return smape
 
+def buy_and_hold(y_true):
+    
+    a = y_true[0]
+    b = y_true[len(y_true)-1]
+    roi = (b-a)/a
+    return roi
+
 from sklearn.metrics import mean_absolute_error
 
 output = pd.read_csv('LSTMoutput.csv')
+#output = pd.read_excel('Data/Temp.xlsx')
 #output = pd.read_excel('temp.xlsx')
 predicted = output.iloc[:,2].values
 actual = output.iloc[:,3].values
@@ -150,5 +158,6 @@ predicted, actual = np.array(predicted), np.array(actual)
 
 roi_predict_only, portfolio_p = ROI_Predict_only(predicted=predicted, actual = actual)
 roi , oredicted = ROI(predicted = predicted, actual = actual)
+buyhold_roi = buy_and_hold(y_true = actual)
 max_roi = ROI_MAX(actual=actual)
 
