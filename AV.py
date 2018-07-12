@@ -468,3 +468,109 @@ with open(rsi_iwm_file, 'w') as oF:
     oF.write(rsi_iwm_request.text)
 
 
+# =============================================================================
+# EEM
+# =============================================================================
+
+eem = {
+    "function" : "TIME_SERIES_DAILY",
+    "symbol" : "EEM",
+    "outputsize" : "full",
+    "datatype" : "csv",
+    "apikey" : "0ZSSUD2LJQV6MK6M",
+    }
+
+
+eem_file = 'ETF_Opportunity_Set/EEM/eem.csv'
+
+eem_request = requests.get(url = API_URL, params = eem)
+
+with open(eem_file, 'w') as oF:
+    oF.write(eem_request.text)
+
+stoch_eem = {
+        'function' : 'STOCH',
+        'symbol' : 'EEM',
+        'interval' : 'daily',
+        'time_period' : '14', #according to investopedia, 14 is usually used
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+stoch_eem_request = requests.get(url = API_URL, params = stoch_eem)
+stoch_eem_file = 'ETF_Opportunity_Set/EEM/stoch_eem.json'
+
+with open(stoch_eem_file, 'w') as oF:
+    oF.write(stoch_eem_request.text)
+
+ema20_eem = {
+        'function' : 'EMA',
+        'symbol' : 'EEM',
+        'interval' : 'daily',
+        'time_period' : '20', #what was used in actual paper
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ema20_eem_request = requests.get(url = API_URL, params = ema20_eem)
+ema20_eem_file = 'ETF_Opportunity_Set/EEM/ema20_eem.json'
+
+with open(ema20_eem_file, 'w') as oF:
+    oF.write(ema20_eem_request.text)
+
+ma5_eem = {
+       'function' : 'sma', 
+       'symbol' : 'EEM',
+       'interval' : 'daily',
+       'time_period' : '5', #what was used in actual paper
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ma5_eem_request = requests.get(url = API_URL, params = ma5_eem)
+ma5_eem_file = 'ETF_Opportunity_Set/EEM/ma5_eem.json'
+
+with open(ma5_eem_file, 'w') as oF:
+    oF.write(ma5_eem_request.text)
+    
+ma10_eem = {
+       'function' : 'sma', 
+       'symbol' : 'EEM',
+       'interval' : 'daily',
+       'time_period' : '10', #what was used in actual paper
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+ma10_eem_request = requests.get(url = API_URL, params = ma10_eem)
+ma10_eem_file = 'ETF_Opportunity_Set/EEM/ma10_eem.json'
+
+with open(ma10_eem_file, 'w') as oF:
+    oF.write(ma10_eem_request.text)
+
+wvad_eem = {
+        'function' : 'WILLR',
+        'symbol' : 'EEM',
+        'interval' : 'daily',
+        'time_period' : '14', #according to investopedia, 14 is usually used
+        'series_type' : 'close',
+        'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+wvad_eem_request = requests.get(url = API_URL, params = wvad_eem)
+wvad_eem_file = 'ETF_Opportunity_Set/EEM/wvad_eem.json'
+
+with open(wvad_eem_file, 'w') as oF:
+    oF.write(wvad_eem_request.text)
+
+
+rsi_eem= {
+       'function' : 'RSI',
+       'symbol' : 'EEM',
+       'interval' : 'daily',
+       'time_period' : '14',
+       'series_type' : 'close',
+       'apikey' : '0ZSSUD2LJQV6MK6M'}
+
+rsi_eem_file = 'ETF_Opportunity_Set/EEM/rsi_eem.json'
+rsi_eem_request = requests.get(url = API_URL, params = rsi_eem)
+
+with open(rsi_eem_file, 'w') as oF:
+    oF.write(rsi_eem_request.text)
+
+
