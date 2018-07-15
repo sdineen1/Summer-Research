@@ -13,7 +13,7 @@ import pandas as pd
 
 #dataset = pd.read_excel('SP500.xlsx')
 #dataset = pd.read_csv('WaveletOutput.csv')
-dataset = pd.read_csv('Data/ValidationDataWithoutUSDX.csv')
+dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/eem_wavelet.csv')
 dataset = dataset.iloc[:,1:].values
 
 null = pd.isnull(dataset[:,0])
@@ -106,8 +106,6 @@ def X_y_variable_selection(time_steps, data_scaled, num_feature, index_of_variab
 def sliding_window(X, y, train_size, test_size):
     #train_size and test_size are ints
     
-    
-    correlations = []
     predictions = []
     actual_price = []
     
@@ -123,7 +121,7 @@ def sliding_window(X, y, train_size, test_size):
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
+        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 1 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
         predicted = predicted[:,0]
@@ -131,10 +129,8 @@ def sliding_window(X, y, train_size, test_size):
         
         actual_price.append(y_test)
         
-        correl = np.corrcoef(predicted, y_test)
-        correlations.append(correl)
 
-    return correlations, predictions, actual_price
+    return predictions, actual_price
 
 
 
@@ -151,10 +147,10 @@ X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset_scaled, num_fe
 #training_set_size = int(len(X)*.80)
 #test_size = int(.2*training_set_size)
 
-training_set_size = 1500
-test_set_size = 500
+training_set_size = 2000
+test_set_size = 250
 
-correlations, y_hat, y = sliding_window(X = X, y = y, train_size = training_set_size, test_size = test_set_size)
+y_hat, y = sliding_window(X = X, y = y, train_size = training_set_size, test_size = test_set_size)
 y_hat, y = np.array(y_hat), np.array(y)
 y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 
@@ -166,7 +162,7 @@ actual_prices = dataset[len(dataset)-len(real_predicted):,0]
 
 y = np.column_stack((real_predicted, actual_prices))
 
-filepath = 'Data/LSTMoutput.csv'
+filepath = 'ETF_Opportunity_Set/LSTMoutput.csv'
 df = pd.DataFrame(y)
 df.to_csv(filepath, index=False)
 
