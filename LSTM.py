@@ -12,17 +12,18 @@ import math as math
 #data = data.iloc[:,2:].values
 
 #Turning the pandas dataframe into numpy array
-data = pd.read_csv('eem_wavelet.csv', engine= 'python', encoding = 'ASCII')
+data = pd.read_csv('ETF_Opportunity_Set/SameTrain/eem_wavelet.csv', engine= 'python', encoding = 'ASCII')
 data = data.iloc[:,1:].values
 data = np.array(data)
-data = data[0:2516,:]
+data = data[0:2250,:]
+#first one will be 0:2250 then 250:2500 then 500:2750 then 750:3000 then 
 
 
 #In the paper, Bao, Yue, and Rao s training set consisted of 80% of the data while the CV and test sets each consisted of 10% of the data
 #training_size = int(math.floor(len(data)*.5)) #going to use .6 because i trained the SAE on 60% of the data
 #cv_size = math.ceil(len(data)*.1)
 #test_size = math.ceil(len(data)*.1)
-training_size = 2061
+training_size = 2000
 
 training_set = data[:training_size] #does it make a difference if I put an 
 

@@ -782,3 +782,998 @@ filepath = 'ETF_Opportunity_Set/EEM/stoch_eem.csv'
 stochDF = pd.DataFrame(stoch)
 
 stochDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# TLT
+# =============================================================================
+
+ema20_list = []
+with open('ETF_Opportunity_Set/TLT/ema20_tlt.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ema20_list.append([j, tech_analysis[j]])
+
+ema20 = []
+for i in range(7, len(ema20_list)):
+    date = ema20_list[i][0]
+    ema20_value = ema20_list[i][1]['EMA']
+
+    ema20.append([date, ema20_value])
+    
+ema20 = np.array(ema20)
+
+filepath = 'ETF_Opportunity_Set/TLT/ema20_tlt.csv'
+
+ema20DF = pd.DataFrame(ema20)
+
+ema20DF.to_csv(filepath, index=False)
+
+
+ma5_list = []
+with open('ETF_Opportunity_Set/TLT/ma5_tlt.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma5_list.append([j, tech_analysis[j]])
+
+ma5 = []
+for i in range(7, len(ma5_list)):
+    date = ma5_list[i][0]
+    ma5_value = ma5_list[i][1]['SMA']
+
+    ma5.append([date, ma5_value])
+    
+ma5 = np.array(ma5)
+
+filepath = 'ETF_Opportunity_Set/TLT/ma5_tlt.csv'
+
+ma5DF = pd.DataFrame(ma5)
+
+ma5DF.to_csv(filepath, index=False)
+
+
+
+ma10_list = []
+with open('ETF_Opportunity_Set/TLT/ma10_tlt.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma10_list.append([j, tech_analysis[j]])
+
+ma10 = []
+for i in range(7, len(ma10_list)):
+    date = ma10_list[i][0]
+    ma10_value = ma10_list[i][1]['SMA']
+
+    ma10.append([date, ma10_value])
+    
+ma10 = np.array(ma10)
+
+filepath = 'ETF_Opportunity_Set/TLT/ma10_tlt.csv'
+
+ma10DF = pd.DataFrame(ma10)
+
+ma10DF.to_csv(filepath, index=False)
+
+
+wvad_list = []
+with open('ETF_Opportunity_Set/TLT/wvad_tlt.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            wvad_list.append([j, tech_analysis[j]])
+
+wvad = []
+for i in range(6, len(wvad_list)):
+    date = wvad_list[i][0]
+    willr = wvad_list[i][1]['WILLR']
+
+    wvad.append([date, willr])
+    
+wvad = np.array(wvad)
+
+filepath = 'ETF_Opportunity_Set/TLT/wvad_tlt.csv'
+
+wvadDF = pd.DataFrame(wvad)
+
+wvadDF.to_csv(filepath, index=False)
+
+
+rsi_list = []
+with open('ETF_Opportunity_Set/TLT/rsi_tlt.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'ETF_Opportunity_Set/TLT/rsi_tlt.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)
+
+stoch_list = []
+with open('ETF_Opportunity_Set/TLT/stoch_tlt.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            stoch_list.append([j, tech_analysis[j]])
+
+stoch = []
+for i in range(10, len(stoch_list)):
+    date = stoch_list[i][0]
+    slowK = stoch_list[i][1]['SlowK']
+    slowD = stoch_list[i][1]['SlowD']
+
+    stoch.append([date, slowK, slowD])
+    
+stoch = np.array(stoch)
+
+filepath = 'ETF_Opportunity_Set/TLT/stoch_tlt.csv'
+
+stochDF = pd.DataFrame(stoch)
+
+stochDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# LQD
+# =============================================================================
+
+ema20_list = []
+with open('ETF_Opportunity_Set/LQD/ema20_lqd.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ema20_list.append([j, tech_analysis[j]])
+
+ema20 = []
+for i in range(7, len(ema20_list)):
+    date = ema20_list[i][0]
+    ema20_value = ema20_list[i][1]['EMA']
+
+    ema20.append([date, ema20_value])
+    
+ema20 = np.array(ema20)
+
+filepath = 'ETF_Opportunity_Set/LQD/ema20_lqd.csv'
+
+ema20DF = pd.DataFrame(ema20)
+
+ema20DF.to_csv(filepath, index=False)
+
+
+ma5_list = []
+with open('ETF_Opportunity_Set/LQD/ma5_lqd.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma5_list.append([j, tech_analysis[j]])
+
+ma5 = []
+for i in range(7, len(ma5_list)):
+    date = ma5_list[i][0]
+    ma5_value = ma5_list[i][1]['SMA']
+
+    ma5.append([date, ma5_value])
+    
+ma5 = np.array(ma5)
+
+filepath = 'ETF_Opportunity_Set/LQD/ma5_lqd.csv'
+
+ma5DF = pd.DataFrame(ma5)
+
+ma5DF.to_csv(filepath, index=False)
+
+
+
+ma10_list = []
+with open('ETF_Opportunity_Set/LQD/ma10_lqd.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma10_list.append([j, tech_analysis[j]])
+
+ma10 = []
+for i in range(7, len(ma10_list)):
+    date = ma10_list[i][0]
+    ma10_value = ma10_list[i][1]['SMA']
+
+    ma10.append([date, ma10_value])
+    
+ma10 = np.array(ma10)
+
+filepath = 'ETF_Opportunity_Set/LQD/ma10_lqd.csv'
+
+ma10DF = pd.DataFrame(ma10)
+
+ma10DF.to_csv(filepath, index=False)
+
+
+wvad_list = []
+with open('ETF_Opportunity_Set/LQD/wvad_lqd.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            wvad_list.append([j, tech_analysis[j]])
+
+wvad = []
+for i in range(6, len(wvad_list)):
+    date = wvad_list[i][0]
+    willr = wvad_list[i][1]['WILLR']
+
+    wvad.append([date, willr])
+    
+wvad = np.array(wvad)
+
+filepath = 'ETF_Opportunity_Set/LQD/wvad_lqd.csv'
+
+wvadDF = pd.DataFrame(wvad)
+
+wvadDF.to_csv(filepath, index=False)
+
+
+rsi_list = []
+with open('ETF_Opportunity_Set/LQD/rsi_lqd.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'ETF_Opportunity_Set/LQD/rsi_lqd.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)
+
+stoch_list = []
+with open('ETF_Opportunity_Set/LQD/stoch_lqd.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            stoch_list.append([j, tech_analysis[j]])
+
+stoch = []
+for i in range(10, len(stoch_list)):
+    date = stoch_list[i][0]
+    slowK = stoch_list[i][1]['SlowK']
+    slowD = stoch_list[i][1]['SlowD']
+
+    stoch.append([date, slowK, slowD])
+    
+stoch = np.array(stoch)
+
+filepath = 'ETF_Opportunity_Set/LQD/stoch_lqd.csv'
+
+stochDF = pd.DataFrame(stoch)
+
+stochDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# TIP
+# =============================================================================
+
+ema20_list = []
+with open('ETF_Opportunity_Set/TIP/ema20_tip.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ema20_list.append([j, tech_analysis[j]])
+
+ema20 = []
+for i in range(7, len(ema20_list)):
+    date = ema20_list[i][0]
+    ema20_value = ema20_list[i][1]['EMA']
+
+    ema20.append([date, ema20_value])
+    
+ema20 = np.array(ema20)
+
+filepath = 'ETF_Opportunity_Set/TIP/ema20_tip.csv'
+
+ema20DF = pd.DataFrame(ema20)
+
+ema20DF.to_csv(filepath, index=False)
+
+
+ma5_list = []
+with open('ETF_Opportunity_Set/TIP/ma5_tip.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma5_list.append([j, tech_analysis[j]])
+
+ma5 = []
+for i in range(7, len(ma5_list)):
+    date = ma5_list[i][0]
+    ma5_value = ma5_list[i][1]['SMA']
+
+    ma5.append([date, ma5_value])
+    
+ma5 = np.array(ma5)
+
+filepath = 'ETF_Opportunity_Set/TIP/ma5_tip.csv'
+
+ma5DF = pd.DataFrame(ma5)
+
+ma5DF.to_csv(filepath, index=False)
+
+
+
+ma10_list = []
+with open('ETF_Opportunity_Set/TIP/ma10_tip.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma10_list.append([j, tech_analysis[j]])
+
+ma10 = []
+for i in range(7, len(ma10_list)):
+    date = ma10_list[i][0]
+    ma10_value = ma10_list[i][1]['SMA']
+
+    ma10.append([date, ma10_value])
+    
+ma10 = np.array(ma10)
+
+filepath = 'ETF_Opportunity_Set/TIP/ma10_tip.csv'
+
+ma10DF = pd.DataFrame(ma10)
+
+ma10DF.to_csv(filepath, index=False)
+
+
+wvad_list = []
+with open('ETF_Opportunity_Set/TIP/wvad_tip.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            wvad_list.append([j, tech_analysis[j]])
+
+wvad = []
+for i in range(6, len(wvad_list)):
+    date = wvad_list[i][0]
+    willr = wvad_list[i][1]['WILLR']
+
+    wvad.append([date, willr])
+    
+wvad = np.array(wvad)
+
+filepath = 'ETF_Opportunity_Set/TIP/wvad_tip.csv'
+
+wvadDF = pd.DataFrame(wvad)
+
+wvadDF.to_csv(filepath, index=False)
+
+
+rsi_list = []
+with open('ETF_Opportunity_Set/TIP/rsi_tip.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'ETF_Opportunity_Set/TIP/rsi_tip.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)
+
+stoch_list = []
+with open('ETF_Opportunity_Set/TIP/stoch_tip.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            stoch_list.append([j, tech_analysis[j]])
+
+stoch = []
+for i in range(10, len(stoch_list)):
+    date = stoch_list[i][0]
+    slowK = stoch_list[i][1]['SlowK']
+    slowD = stoch_list[i][1]['SlowD']
+
+    stoch.append([date, slowK, slowD])
+    
+stoch = np.array(stoch)
+
+filepath = 'ETF_Opportunity_Set/TIP/stoch_tip.csv'
+
+stochDF = pd.DataFrame(stoch)
+
+stochDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# IYR
+# =============================================================================
+
+ema20_list = []
+with open('ETF_Opportunity_Set/IYR/ema20_iyr.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ema20_list.append([j, tech_analysis[j]])
+
+ema20 = []
+for i in range(7, len(ema20_list)):
+    date = ema20_list[i][0]
+    ema20_value = ema20_list[i][1]['EMA']
+
+    ema20.append([date, ema20_value])
+    
+ema20 = np.array(ema20)
+
+filepath = 'ETF_Opportunity_Set/IYR/ema20_iyr.csv'
+
+ema20DF = pd.DataFrame(ema20)
+
+ema20DF.to_csv(filepath, index=False)
+
+
+ma5_list = []
+with open('ETF_Opportunity_Set/IYR/ma5_iyr.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma5_list.append([j, tech_analysis[j]])
+
+ma5 = []
+for i in range(7, len(ma5_list)):
+    date = ma5_list[i][0]
+    ma5_value = ma5_list[i][1]['SMA']
+
+    ma5.append([date, ma5_value])
+    
+ma5 = np.array(ma5)
+
+filepath = 'ETF_Opportunity_Set/IYR/ma5_iyr.csv'
+
+ma5DF = pd.DataFrame(ma5)
+
+ma5DF.to_csv(filepath, index=False)
+
+
+
+ma10_list = []
+with open('ETF_Opportunity_Set/IYR/ma10_iyr.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma10_list.append([j, tech_analysis[j]])
+
+ma10 = []
+for i in range(7, len(ma10_list)):
+    date = ma10_list[i][0]
+    ma10_value = ma10_list[i][1]['SMA']
+
+    ma10.append([date, ma10_value])
+    
+ma10 = np.array(ma10)
+
+filepath = 'ETF_Opportunity_Set/IYR/ma10_iyr.csv'
+
+ma10DF = pd.DataFrame(ma10)
+
+ma10DF.to_csv(filepath, index=False)
+
+
+wvad_list = []
+with open('ETF_Opportunity_Set/IYR/wvad_iyr.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            wvad_list.append([j, tech_analysis[j]])
+
+wvad = []
+for i in range(6, len(wvad_list)):
+    date = wvad_list[i][0]
+    willr = wvad_list[i][1]['WILLR']
+
+    wvad.append([date, willr])
+    
+wvad = np.array(wvad)
+
+filepath = 'ETF_Opportunity_Set/IYR/wvad_iyr.csv'
+
+wvadDF = pd.DataFrame(wvad)
+
+wvadDF.to_csv(filepath, index=False)
+
+
+rsi_list = []
+with open('ETF_Opportunity_Set/IYR/rsi_iyr.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'ETF_Opportunity_Set/IYR/rsi_iyr.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)
+
+stoch_list = []
+with open('ETF_Opportunity_Set/IYR/stoch_iyr.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            stoch_list.append([j, tech_analysis[j]])
+
+stoch = []
+for i in range(10, len(stoch_list)):
+    date = stoch_list[i][0]
+    slowK = stoch_list[i][1]['SlowK']
+    slowD = stoch_list[i][1]['SlowD']
+
+    stoch.append([date, slowK, slowD])
+    
+stoch = np.array(stoch)
+
+filepath = 'ETF_Opportunity_Set/IYR/stoch_iyr.csv'
+
+stochDF = pd.DataFrame(stoch)
+
+stochDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# GLD
+# =============================================================================
+
+ema20_list = []
+with open('ETF_Opportunity_Set/GLD/ema20_gld.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ema20_list.append([j, tech_analysis[j]])
+
+ema20 = []
+for i in range(7, len(ema20_list)):
+    date = ema20_list[i][0]
+    ema20_value = ema20_list[i][1]['EMA']
+
+    ema20.append([date, ema20_value])
+    
+ema20 = np.array(ema20)
+
+filepath = 'ETF_Opportunity_Set/GLD/ema20_gld.csv'
+
+ema20DF = pd.DataFrame(ema20)
+
+ema20DF.to_csv(filepath, index=False)
+
+
+ma5_list = []
+with open('ETF_Opportunity_Set/GLD/ma5_gld.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma5_list.append([j, tech_analysis[j]])
+
+ma5 = []
+for i in range(7, len(ma5_list)):
+    date = ma5_list[i][0]
+    ma5_value = ma5_list[i][1]['SMA']
+
+    ma5.append([date, ma5_value])
+    
+ma5 = np.array(ma5)
+
+filepath = 'ETF_Opportunity_Set/GLD/ma5_gld.csv'
+
+ma5DF = pd.DataFrame(ma5)
+
+ma5DF.to_csv(filepath, index=False)
+
+
+
+ma10_list = []
+with open('ETF_Opportunity_Set/GLD/ma10_gld.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma10_list.append([j, tech_analysis[j]])
+
+ma10 = []
+for i in range(7, len(ma10_list)):
+    date = ma10_list[i][0]
+    ma10_value = ma10_list[i][1]['SMA']
+
+    ma10.append([date, ma10_value])
+    
+ma10 = np.array(ma10)
+
+filepath = 'ETF_Opportunity_Set/GLD/ma10_gld.csv'
+
+ma10DF = pd.DataFrame(ma10)
+
+ma10DF.to_csv(filepath, index=False)
+
+
+wvad_list = []
+with open('ETF_Opportunity_Set/GLD/wvad_gld.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            wvad_list.append([j, tech_analysis[j]])
+
+wvad = []
+for i in range(6, len(wvad_list)):
+    date = wvad_list[i][0]
+    willr = wvad_list[i][1]['WILLR']
+
+    wvad.append([date, willr])
+    
+wvad = np.array(wvad)
+
+filepath = 'ETF_Opportunity_Set/GLD/wvad_gld.csv'
+
+wvadDF = pd.DataFrame(wvad)
+
+wvadDF.to_csv(filepath, index=False)
+
+
+rsi_list = []
+with open('ETF_Opportunity_Set/GLD/rsi_gld.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'ETF_Opportunity_Set/GLD/rsi_gld.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)
+
+stoch_list = []
+with open('ETF_Opportunity_Set/GLD/stoch_gld.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            stoch_list.append([j, tech_analysis[j]])
+
+stoch = []
+for i in range(10, len(stoch_list)):
+    date = stoch_list[i][0]
+    slowK = stoch_list[i][1]['SlowK']
+    slowD = stoch_list[i][1]['SlowD']
+
+    stoch.append([date, slowK, slowD])
+    
+stoch = np.array(stoch)
+
+filepath = 'ETF_Opportunity_Set/GLD/stoch_gld.csv'
+
+stochDF = pd.DataFrame(stoch)
+
+stochDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# OIH
+# =============================================================================
+
+ema20_list = []
+with open('ETF_Opportunity_Set/OIH/ema20_oih.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ema20_list.append([j, tech_analysis[j]])
+
+ema20 = []
+for i in range(7, len(ema20_list)):
+    date = ema20_list[i][0]
+    ema20_value = ema20_list[i][1]['EMA']
+
+    ema20.append([date, ema20_value])
+    
+ema20 = np.array(ema20)
+
+filepath = 'ETF_Opportunity_Set/OIH/ema20_oih.csv'
+
+ema20DF = pd.DataFrame(ema20)
+
+ema20DF.to_csv(filepath, index=False)
+
+
+ma5_list = []
+with open('ETF_Opportunity_Set/OIH/ma5_oih.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma5_list.append([j, tech_analysis[j]])
+
+ma5 = []
+for i in range(7, len(ma5_list)):
+    date = ma5_list[i][0]
+    ma5_value = ma5_list[i][1]['SMA']
+
+    ma5.append([date, ma5_value])
+    
+ma5 = np.array(ma5)
+
+filepath = 'ETF_Opportunity_Set/OIH/ma5_oih.csv'
+
+ma5DF = pd.DataFrame(ma5)
+
+ma5DF.to_csv(filepath, index=False)
+
+
+
+ma10_list = []
+with open('ETF_Opportunity_Set/OIH/ma10_oih.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma10_list.append([j, tech_analysis[j]])
+
+ma10 = []
+for i in range(7, len(ma10_list)):
+    date = ma10_list[i][0]
+    ma10_value = ma10_list[i][1]['SMA']
+
+    ma10.append([date, ma10_value])
+    
+ma10 = np.array(ma10)
+
+filepath = 'ETF_Opportunity_Set/OIH/ma10_oih.csv'
+
+ma10DF = pd.DataFrame(ma10)
+
+ma10DF.to_csv(filepath, index=False)
+
+
+wvad_list = []
+with open('ETF_Opportunity_Set/OIH/wvad_oih.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            wvad_list.append([j, tech_analysis[j]])
+
+wvad = []
+for i in range(6, len(wvad_list)):
+    date = wvad_list[i][0]
+    willr = wvad_list[i][1]['WILLR']
+
+    wvad.append([date, willr])
+    
+wvad = np.array(wvad)
+
+filepath = 'ETF_Opportunity_Set/OIH/wvad_oih.csv'
+
+wvadDF = pd.DataFrame(wvad)
+
+wvadDF.to_csv(filepath, index=False)
+
+
+rsi_list = []
+with open('ETF_Opportunity_Set/OIH/rsi_oih.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'ETF_Opportunity_Set/OIH/rsi_oih.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)
+
+stoch_list = []
+with open('ETF_Opportunity_Set/OIH/stoch_oih.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            stoch_list.append([j, tech_analysis[j]])
+
+stoch = []
+for i in range(10, len(stoch_list)):
+    date = stoch_list[i][0]
+    slowK = stoch_list[i][1]['SlowK']
+    slowD = stoch_list[i][1]['SlowD']
+
+    stoch.append([date, slowK, slowD])
+    
+stoch = np.array(stoch)
+
+filepath = 'ETF_Opportunity_Set/OIH/stoch_oih.csv'
+
+stochDF = pd.DataFrame(stoch)
+
+stochDF.to_csv(filepath, index=False)
+
+# =============================================================================
+# FXE
+# =============================================================================
+
+
+ema20_list = []
+with open('ETF_Opportunity_Set/FXE/ema20_fxe.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ema20_list.append([j, tech_analysis[j]])
+
+ema20 = []
+for i in range(7, len(ema20_list)):
+    date = ema20_list[i][0]
+    ema20_value = ema20_list[i][1]['EMA']
+
+    ema20.append([date, ema20_value])
+    
+ema20 = np.array(ema20)
+
+filepath = 'ETF_Opportunity_Set/FXE/ema20_fxe.csv'
+
+ema20DF = pd.DataFrame(ema20)
+
+ema20DF.to_csv(filepath, index=False)
+
+
+ma5_list = []
+with open('ETF_Opportunity_Set/FXE/ma5_fxe.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma5_list.append([j, tech_analysis[j]])
+
+ma5 = []
+for i in range(7, len(ma5_list)):
+    date = ma5_list[i][0]
+    ma5_value = ma5_list[i][1]['SMA']
+
+    ma5.append([date, ma5_value])
+    
+ma5 = np.array(ma5)
+
+filepath = 'ETF_Opportunity_Set/FXE/ma5_fxe.csv'
+
+ma5DF = pd.DataFrame(ma5)
+
+ma5DF.to_csv(filepath, index=False)
+
+
+
+ma10_list = []
+with open('ETF_Opportunity_Set/FXE/ma10_fxe.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            ma10_list.append([j, tech_analysis[j]])
+
+ma10 = []
+for i in range(7, len(ma10_list)):
+    date = ma10_list[i][0]
+    ma10_value = ma10_list[i][1]['SMA']
+
+    ma10.append([date, ma10_value])
+    
+ma10 = np.array(ma10)
+
+filepath = 'ETF_Opportunity_Set/FXE/ma10_fxe.csv'
+
+ma10DF = pd.DataFrame(ma10)
+
+ma10DF.to_csv(filepath, index=False)
+
+
+wvad_list = []
+with open('ETF_Opportunity_Set/FXE/wvad_fxe.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            wvad_list.append([j, tech_analysis[j]])
+
+wvad = []
+for i in range(6, len(wvad_list)):
+    date = wvad_list[i][0]
+    willr = wvad_list[i][1]['WILLR']
+
+    wvad.append([date, willr])
+    
+wvad = np.array(wvad)
+
+filepath = 'ETF_Opportunity_Set/FXE/wvad_fxe.csv'
+
+wvadDF = pd.DataFrame(wvad)
+
+wvadDF.to_csv(filepath, index=False)
+
+
+rsi_list = []
+with open('ETF_Opportunity_Set/FXE/rsi_fxe.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            rsi_list.append([j, tech_analysis[j]])
+
+rsi = []
+for i in range(7, len(rsi_list)):
+    date = rsi_list[i][0]
+    rsi_value = rsi_list[i][1]['RSI']
+
+    rsi.append([date, rsi_value])
+    
+rsi = np.array(rsi)
+
+filepath = 'ETF_Opportunity_Set/FXE/rsi_fxe.csv'
+
+rsiDF = pd.DataFrame(rsi)
+
+rsiDF.to_csv(filepath, index=False)
+
+stoch_list = []
+with open('ETF_Opportunity_Set/FXE/stoch_fxe.json') as data_file:    
+    data = json.load(data_file)
+    for tech_analysis in data.values(): #.values()
+        for j in tech_analysis:
+            stoch_list.append([j, tech_analysis[j]])
+
+stoch = []
+for i in range(10, len(stoch_list)):
+    date = stoch_list[i][0]
+    slowK = stoch_list[i][1]['SlowK']
+    slowD = stoch_list[i][1]['SlowD']
+
+    stoch.append([date, slowK, slowD])
+    
+stoch = np.array(stoch)
+
+filepath = 'ETF_Opportunity_Set/FXE/stoch_fxe.csv'
+
+stochDF = pd.DataFrame(stoch)
+
+stochDF.to_csv(filepath, index=False)
