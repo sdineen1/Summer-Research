@@ -144,11 +144,11 @@ def buy_and_hold(y_true):
 
 from sklearn.metrics import mean_absolute_error
 
-output = pd.read_csv('LSTMoutput.csv')
+output = pd.read_csv('ETF_Opportunity_Set/LSTMoutput.csv')
 #output = pd.read_excel('Data/Temp.xlsx')
 #output = pd.read_excel('temp.xlsx')
-predicted = output.iloc[:,2].values
-actual = output.iloc[:,3].values
+predicted = output.iloc[:,0].values
+actual = output.iloc[:,1].values
 predicted, actual = np.array(predicted), np.array(actual)
 mae = mean_absolute_error(actual,predicted)
 mape = MAPE(y_true = actual, y_pred = predicted)
