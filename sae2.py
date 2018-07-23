@@ -184,9 +184,9 @@ y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 ,
 #predict_dataset_like[:,0] = y_hat[:,0]
 #real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
 
-actual_prices = dataset[len(dataset)-len(real_predicted):,0]
+#actual_prices = dataset[len(dataset)-len(real_predicted):,0]
 
-y = np.column_stack((real_predicted, actual_prices))
+y = np.column_stack((y_hat, y))
 
 filepath = 'ETF_Opportunity_Set/LSTMoutput.csv'
 df = pd.DataFrame(y)
