@@ -163,7 +163,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         #predicted = predicted[:,0]
         predictions.append([real_predicted])
         
-        y = appended_closing_prices[time_steps+train_size:train_size+test_size+time_steps]
+        y = appended_closing_prices[time_steps+train_size:train_size+test_size+time_steps,0]
         
         actual_price.append(y)
         
