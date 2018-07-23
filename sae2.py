@@ -141,7 +141,10 @@ def sliding_window(data_scaled, train_size, test_size, time_steps):
         appended_closing_prices = np.zeros(shape = (output.shape[0],8))
         appended_closing_prices[:,0] = x[:,0]
         appended_closing_prices[:,1:8]= output[:,:]
-        X, y = X_y_vectors(time_steps = time_steps, data_scaled = appended_closing_prices, num_feature = 8)
+        scaler = MinMaxScaler()
+        appended_closing_prices_scaled = scaler.fit_transform(appended_closing_prices)
+        
+        X, y = X_y_vectors(time_steps = time_steps, data_scaled = appended_closing_prices_scaled, num_feature = 8)
         
         X_train = X[:train_size, :, :]
         y_train = y[:train_size]
@@ -153,10 +156,16 @@ def sliding_window(data_scaled, train_size, test_size, time_steps):
         regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 1 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
+        predict_dataset_like = np.zeros(shape=(len(predicted), appended_closing_prices_scaled.shape[1]))
+        predict_dataset_like[:,0] = predicted[:,0]
+        real_predicted = scaler.inverse_transform(predict_dataset_like)[:,0]
+
         #predicted = predicted[:,0]
-        predictions.append([predicted])
+        predictions.append([real_predicted])
         
-        actual_price.append(y_test)
+        y = appended_closing_prices[time_steps:train_size+test_size]
+        
+        actual_price.append(y)
         
         run = run+1
         
@@ -171,9 +180,9 @@ y_hat, y = sliding_window(data_scaled, train_size = training_set_size, test_size
 y_hat, y = np.array(y_hat), np.array(y)
 y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 
-predict_dataset_like = np.zeros(shape=(len(y_hat), dataset.shape[1]))
-predict_dataset_like[:,0] = y_hat[:,0]
-real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
+#predict_dataset_like = np.zeros(shape=(len(y_hat), dataset.shape[1]))
+#predict_dataset_like[:,0] = y_hat[:,0]
+#real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
 
 actual_prices = dataset[len(dataset)-len(real_predicted):,0]
 
