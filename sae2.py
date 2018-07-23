@@ -172,7 +172,7 @@ y_hat, y = np.array(y_hat), np.array(y)
 y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 
 predict_dataset_like = np.zeros(shape=(len(y_hat), dataset.shape[1]))
-predict_dataset_like[:,0] = y_hat[:,:]
+predict_dataset_like[:,0] = y_hat[:,0]
 real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
 
 actual_prices = dataset[len(dataset)-len(real_predicted):,0]
