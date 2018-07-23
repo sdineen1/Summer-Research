@@ -153,7 +153,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps):
         regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 1 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
-        predicted = predicted[:,0]
+        #predicted = predicted[:,0]
         predictions.append([predicted])
         
         actual_price.append(y_test)
