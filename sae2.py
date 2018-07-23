@@ -122,7 +122,7 @@ def train_regressor(compiled_regressor , X_train, y_train, epochs, batch_size):
         return regressor
 
 
-def sliding_window(data_scaled, train_size, test_size, time_steps):
+def sliding_window(data_scaled, train_size, test_size, time_steps, data):
     #train_size and test_size are ints
     
     predictions = []
@@ -139,7 +139,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps):
         
         output = build_sae(x_train_scaled = sae_train, X_train_and_test = x)
         appended_closing_prices = np.zeros(shape = (output.shape[0],8))
-        appended_closing_prices[:,0] = x[:,0]
+        appended_closing_prices[:,0] = data[i:i+train_size+test_size+time_steps,0]
         appended_closing_prices[:,1:8]= output[:,:]
         scaler = MinMaxScaler()
         appended_closing_prices_scaled = scaler.fit_transform(appended_closing_prices)
@@ -163,7 +163,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps):
         #predicted = predicted[:,0]
         predictions.append([real_predicted])
         
-        y = appended_closing_prices[time_steps:train_size+test_size]
+        y = appended_closing_prices[time_steps+train_size:train_size+test_size+time_steps]
         
         actual_price.append(y)
         
@@ -176,7 +176,7 @@ training_set_size = 2000
 test_set_size = 250
 time_steps = 90
 
-y_hat, y = sliding_window(data_scaled, train_size = training_set_size, test_size = test_set_size, time_steps = time_steps)
+y_hat, y = sliding_window(data_scaled, train_size = training_set_size, test_size = test_set_size, time_steps = time_steps, data = data)
 y_hat, y = np.array(y_hat), np.array(y)
 y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 
