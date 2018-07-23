@@ -143,10 +143,10 @@ def sliding_window(data_scaled, train_size, test_size, time_steps):
         appended_closing_prices[:,1:8]= output[:,:]
         X, y = X_y_vectors(time_steps = time_steps, data_scaled = appended_closing_prices, num_feature = 8)
         
-        X_train = X[i:i+train_size, :, :]
-        y_train = y[i:i+train_size]
-        X_test = X[i+train_size:i+train_size+test_size, :, :]
-        y_test = y[i+train_size: i + train_size + test_size]
+        X_train = X[:train_size, :, :]
+        y_train = y[:train_size]
+        X_test = X[train_size:train_size+test_size, :, :]
+        y_test = y[train_size: train_size + test_size]
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
