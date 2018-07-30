@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import math as math
 
-dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/oih.csv')
+dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/eem.csv')
 data = dataset.iloc[:,1:].values
 data = np.array(data)
 
@@ -20,8 +20,8 @@ sc = MinMaxScaler(feature_range = (0,1))
 
 data_scaled = sc.fit_transform(data)
 
-from sklearn.model_selection import train_test_split
-x_train_scaled, x_test_scaled = train_test_split(data_scaled, test_size = .2)
+#from sklearn.model_selection import train_test_split
+#x_train_scaled, x_test_scaled = train_test_split(data_scaled, test_size = .2)
 
 from keras.models import Model, Input
 from keras.layers import Dense
@@ -134,7 +134,8 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         
         
         print(run)
-        sae_train = data_scaled[i:i+train_size+time_steps, :]
+        sae_train = data_scaled[i:i+train_size+time_steps, :] #the training data for the SAE
+        
         x = data_scaled[i:i+train_size+test_size+time_steps, :]
         
         output = build_sae(x_train_scaled = sae_train, X_train_and_test = x)
