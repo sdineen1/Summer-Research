@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import math as math
 
-dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/fxe.csv')
+dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/gld.csv')
 data = dataset.iloc[:,1:].values
 data = np.array(data)
 
