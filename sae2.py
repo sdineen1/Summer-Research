@@ -140,7 +140,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         
         output = build_sae(x_train_scaled = sae_train, X_train_and_test = x)
         appended_closing_prices = np.zeros(shape = (output.shape[0],8))
-        appended_closing_prices[:,0] = data[i:i+train_size+test_size+time_steps,0]
+        appended_closing_prices[:,0] = data[i:i+train_size+test_size+time_steps,1] #changing the last thing from 0 to 1 appends the opening price
         appended_closing_prices[:,1:8]= output[:,:]
         scaler = MinMaxScaler()
         appended_closing_prices_scaled = scaler.fit_transform(appended_closing_prices)
@@ -164,7 +164,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         #predicted = predicted[:,0]
         predictions.append([real_predicted])
         
-        y = appended_closing_prices[time_steps+train_size:train_size+test_size+time_steps,0]
+        y = appended_closing_prices[time_steps+train_size:train_size+test_size+time_steps,0] #0 here indicates whatever value we appened to the first columns whether that be the closing or opening price etc.
         
         actual_price.append(y)
         
