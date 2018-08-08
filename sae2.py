@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import math as math
 
-dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/tlt.csv')
+dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/oih.csv')
 data = dataset.iloc[:,1:].values
 data = np.array(data)
 
@@ -140,7 +140,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         
         output = build_sae(x_train_scaled = sae_train, X_train_and_test = x)
         appended_closing_prices = np.zeros(shape = (output.shape[0],8))
-        appended_closing_prices[:,0] = data[i:i+train_size+test_size+time_steps,1] #changing the last thing from 0 to 1 appends the opening price
+        appended_closing_prices[:,0] = data[i:i+train_size+test_size+time_steps,0] #changing the last thing from 0 to 1 appends the opening price
         appended_closing_prices[:,1:8]= output[:,:]
         scaler = MinMaxScaler()
         appended_closing_prices_scaled = scaler.fit_transform(appended_closing_prices)
