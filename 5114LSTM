@@ -101,31 +101,50 @@ def X_y_variable_selection(time_steps, data_scaled, num_feature, index_of_variab
     return X, y
 
 
-def sliding_window(X, y, train_size, test_size):
+def sliding_window(train_size, test_size, time_steps, data):
     #train_size and test_size are ints
     
     predictions = []
     actual_price = []
-    
+    run = 1 
     #This is the sliding-window for-loop.  The for-loop starts at 0 and goes to legnth of X minus the size of the additive total of the size of the trainign and sets
     #i is then incremented by the size of the test set
-    for i in range (0, int(len(X))-(training_set_size+test_size),test_size):
+    for i in range (0, int(len(data))-(train_size+test_size+time_steps),test_size):
         
-        print(i)
-        X_train = X[i:i+training_set_size, :, :]
-        y_train = y[i:i+training_set_size]
-        X_test = X[i+training_set_size:i+training_set_size+test_size, :, :]
-        y_test = y[i+training_set_size: i + training_set_size + test_size]
+        
+        print(run)
+        
+        x = data[i:i+train_size+test_size+time_steps, :]
+        
+        scaler = MinMaxScaler()
+        #appended_closing_prices_scaled = scaler.fit_transform(appended_closing_prices)
+        x_scaled = scaler.fit_transform(x)
+
+        
+        X, y = X_y_vectors(time_steps = time_steps, data_scaled = x_scaled, num_feature = data.shape[1])
+        
+        X_train = X[:train_size, :, :]
+        y_train = y[:train_size]
+        X_test = X[train_size:train_size+test_size, :, :]
+        y_test = y[train_size: train_size + test_size]
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
         regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
-        predicted = predicted[:,0]
-        predictions.append([predicted])
+        predict_dataset_like = np.zeros(shape=(len(predicted), x_scaled.shape[1]))
+        predict_dataset_like[:,0] = predicted[:,0]
+        real_predicted = scaler.inverse_transform(predict_dataset_like)[:,0]
+
+        #predicted = predicted[:,0]
+        predictions.append([real_predicted])
         
-        actual_price.append(y_test)
+        y = x[time_steps+train_size:train_size+test_size+time_steps,0] #0 here indicates whatever value we appened to the first columns whether that be the closing or opening price etc.
+        
+        actual_price.append(y)
+        
+        run = run+1
         
 
     return predictions, actual_price
