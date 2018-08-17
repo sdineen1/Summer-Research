@@ -166,7 +166,7 @@ features = int(dataset_scaled.shape[1])
 training_set_size = 2000
 test_set_size = 250
 
-y_hat, y = sliding_windowtrain_size = training_set_size, test_size = test_set_size, time_steps = time_steps, data = dataset)
+y_hat, y = sliding_window(train_size = training_set_size, test_size = test_set_size, time_steps = time_steps, data = dataset)
 y_hat, y = np.array(y_hat), np.array(y)
 y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 
