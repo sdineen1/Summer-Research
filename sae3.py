@@ -126,7 +126,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         scaler = MinMaxScaler()
         appended_closing_prices_scaled = scaler.fit_transform(appended_closing_prices)
         
-        X, y = X_y_vectors(time_steps = time_steps, data_scaled = appended_closing_prices_scaled, num_feature = 8)
+        X, y = X_y_vectors(time_steps = time_steps, data_scaled = appended_closing_prices_scaled, num_feature = 13) #FUCKKKKKKKK
         
         X_train = X[:train_size, :, :]
         y_train = y[:train_size]
