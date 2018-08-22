@@ -81,7 +81,7 @@ def X_y_vectors(time_steps, data_scaled, num_feature, onehot):
     
     for i in range(time_steps, int(len(data_scaled))):
         X.append(data_scaled[i-time_steps:i,0:num_feature])           
-        y.append(onehot[i-1,0])   #minus one because onehot index i is the next days buy or sell                        
+        y.append(onehot[i-1])   #minus one because onehot index i is the next days buy or sell                        
 
     X, y = np.array(X), np.array(y)
     X = np.reshape(X, (X.shape[0], X.shape[1], num_feature))
@@ -138,7 +138,8 @@ def sliding_window(num_feature, train_size, test_size, time_steps, data, onehot)
         print(run)
         
         x = data[i:i+train_size+test_size+time_steps, :]
-        
+        #data2 = data[i:i+train_size+test_size+time_steps, :]
+        one_hot = onehot[i:i+train_size+test_size+time_steps, :]
         
         '''appended_closing_prices = np.zeros(shape = (output.shape[0],8))
         appended_closing_prices[:,0] = data[i:i+train_size+test_size+time_steps,0] #changing the last thing from 0 to 1 appends the opening price
@@ -146,7 +147,7 @@ def sliding_window(num_feature, train_size, test_size, time_steps, data, onehot)
         scaler = MinMaxScaler()
         x_scaled = scaler.fit_transform(x)
         
-        X, y = X_y_vectors(time_steps = time_steps, data_scaled = x_scaled, num_feature = num_feature, onehot = onehot)
+        X, y = X_y_vectors(time_steps = time_steps, data_scaled = x_scaled, num_feature = num_feature, onehot = one_hot)
         
         X_train = X[:train_size, :, :]
         y_train = y[:train_size]
@@ -154,7 +155,7 @@ def sliding_window(num_feature, train_size, test_size, time_steps, data, onehot)
         y_test = y[train_size: train_size + test_size]
 
     
-        regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
+        regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam', metrics=['accuracy'])
         regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
