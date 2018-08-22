@@ -155,7 +155,7 @@ def sliding_window(num_feature, train_size, test_size, time_steps, data, onehot)
         y_test = y[train_size: train_size + test_size]
 
     
-        regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam', metrics=['accuracy'])
+        regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam', metric=['accuracy'])
         regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
