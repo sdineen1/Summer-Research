@@ -110,7 +110,7 @@ def compile_regressor(units, shape, dropout_rate, optim):
     regressor.add(LSTM(units = units))
     regressor.add(Dropout(dropout_rate))
     
-    regressor.add(Dense(units = 1, activation = 'softmax'))
+    regressor.add(Dense(units = 1, activation = 'sigmoid'))
     
     regressor.compile(optimizer=optim, loss = 'binary_crossentropy', metrics=['accuracy'])
     
