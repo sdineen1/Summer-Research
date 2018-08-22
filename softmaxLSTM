@@ -10,9 +10,11 @@ import pandas as pd
 import numpy as np
 import math as math
 
-dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/iyr.csv')
+dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/spy.csv')
+onehot = pd.read_csv('ETF_Opportunity_Set/SameTrain/spy_onehot.csv')
 data = dataset.iloc[:,1:].values
 data = np.array(data)
+onehot_data = np.array(onehot)
 
 from sklearn.preprocessing import MinMaxScaler
 
@@ -72,14 +74,14 @@ def build_sae(x_train_scaled, X_train_and_test):
     #sets up the proper X vectors to be fed into the SAE'''
       
 
-def X_y_vectors(time_steps, data_scaled, num_feature):
+def X_y_vectors(time_steps, data_scaled, num_feature, onehot):
     #assumes the variable that we are trying to predict is in the 0 index
     X = []
     y = []
     
     for i in range(time_steps, int(len(data_scaled))):
         X.append(data_scaled[i-time_steps:i,0:num_feature])           
-        y.append(data_scaled[i,0])                           
+        y.append(onehot[i-1,0])   #minus one because onehot index i is the next days buy or sell                        
 
     X, y = np.array(X), np.array(y)
     X = np.reshape(X, (X.shape[0], X.shape[1], num_feature))
@@ -110,7 +112,7 @@ def compile_regressor(units, shape, dropout_rate, optim):
     
     regressor.add(Dense(units = 1, activation = 'softmax'))
     
-    regressor.compile(optimizer=optim, loss = 'binary_cross_entropy')
+    regressor.compile(optimizer=optim, loss = 'binary_crossentropy')
     
     
     return regressor
@@ -122,7 +124,7 @@ def train_regressor(compiled_regressor , X_train, y_train, epochs, batch_size):
         return regressor
 
 
-def sliding_window(data_scaled, train_size, test_size, time_steps, data):
+def sliding_window(num_feature, train_size, test_size, time_steps, data, onehot):
     #train_size and test_size are ints
     
     predictions = []
@@ -134,18 +136,17 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         
         
         print(run)
-        sae_train = data_scaled[i:i+train_size+time_steps, :] #the training data for the SAE
         
-        x = data_scaled[i:i+train_size+test_size+time_steps, :]
+        x = data[i:i+train_size+test_size+time_steps, :]
         
-        output = build_sae(x_train_scaled = sae_train, X_train_and_test = x)
-        appended_closing_prices = np.zeros(shape = (output.shape[0],8))
+        
+        '''appended_closing_prices = np.zeros(shape = (output.shape[0],8))
         appended_closing_prices[:,0] = data[i:i+train_size+test_size+time_steps,0] #changing the last thing from 0 to 1 appends the opening price
-        appended_closing_prices[:,1:8]= output[:,:]
+        appended_closing_prices[:,1:8]= output[:,:]'''
         scaler = MinMaxScaler()
-        appended_closing_prices_scaled = scaler.fit_transform(appended_closing_prices)
+        x_scaled = scaler.fit_transform(x)
         
-        X, y = X_y_vectors(time_steps = time_steps, data_scaled = appended_closing_prices_scaled, num_feature = 8)
+        X, y = X_y_vectors(time_steps = time_steps, data_scaled = data, num_feature = num_feature, onehot = onehot)
         
         X_train = X[:train_size, :, :]
         y_train = y[:train_size]
@@ -154,19 +155,16 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 100 , batch_size = 60)
+        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = y_train, epochs = 1 , batch_size = 60)
     
         predicted = regressor.predict(X_test)
-        predict_dataset_like = np.zeros(shape=(len(predicted), appended_closing_prices_scaled.shape[1]))
-        predict_dataset_like[:,0] = predicted[:,0]
-        real_predicted = scaler.inverse_transform(predict_dataset_like)[:,0]
+
 
         #predicted = predicted[:,0]
-        predictions.append([real_predicted])
+        predictions.append([predicted])
         
-        y = appended_closing_prices[time_steps+train_size:train_size+test_size+time_steps,0] #0 here indicates whatever value we appened to the first columns whether that be the closing or opening price etc.
         
-        actual_price.append(y)
+        actual_price.append(y_test)
         
         run = run+1
         
@@ -177,7 +175,13 @@ training_set_size = 2000
 test_set_size = 250
 time_steps = 90
 
-y_hat, y = sliding_window(data_scaled, train_size = training_set_size, test_size = test_set_size, time_steps = time_steps, data = data)
+y_hat, y = sliding_window(num_feature = data.shape[1], 
+                          train_size = training_set_size, 
+                          test_size = test_set_size, 
+                          time_steps = time_steps, 
+                          data = data, 
+                          onehot = onehot_data)
+
 y_hat, y = np.array(y_hat), np.array(y)
 y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 

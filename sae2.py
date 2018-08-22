@@ -165,7 +165,7 @@ def sliding_window(data_scaled, train_size, test_size, time_steps, data):
         predictions.append([real_predicted])
         
         y = appended_closing_prices[time_steps+train_size:train_size+test_size+time_steps,0] #0 here indicates whatever value we appened to the first columns whether that be the closing or opening price etc.
-        
+        #DELETE THIS AND CHANGE IT FOR Y TEST AND MAKE SURE WE GET SAME TESTING DAY
         actual_price.append(y)
         
         run = run+1
