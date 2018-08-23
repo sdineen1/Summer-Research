@@ -103,11 +103,11 @@ def X_y_variable_selection(time_steps, data_scaled, num_feature, index_of_variab
     return X, y
 
 
-def sliding_window(X, y, train_size, test_size):
+def sliding_window(X, y, train_size, test_size, real_y):
     #train_size and test_size are ints
     
     predictions = []
-    actual_price = []
+    actual_price = [] 
     
     #This is the sliding-window for-loop.  The for-loop starts at 0 and goes to legnth of X minus the size of the additive total of the size of the trainign and sets
     #i is then incremented by the size of the test set
@@ -118,6 +118,8 @@ def sliding_window(X, y, train_size, test_size):
         y_train = y[i:i+training_set_size]
         X_test = X[i+training_set_size:i+training_set_size+test_size, :, :]
         y_test = y[i+training_set_size: i + training_set_size + test_size]
+        y_real = real_y[i+training_set_size: i + training_set_size + test_size]
+
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
@@ -127,7 +129,7 @@ def sliding_window(X, y, train_size, test_size):
         predicted = predicted[:,0]
         predictions.append([predicted])
         
-        actual_price.append(y_test)
+        actual_price.append(y_real)
         
 
     return predictions, actual_price
@@ -144,13 +146,14 @@ features = int(dataset_scaled.shape[1])
 
 
 X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset_scaled, num_feature = features) 
+X_real, y_real = X_y_vectors(time_steps = time_steps, data_scaled = dataset, num_feature = features)
 #training_set_size = int(len(X)*.80)
 #test_size = int(.2*training_set_size)
 
 training_set_size = 2000
 test_set_size = 250
 
-y_hat, y = sliding_window(X = X, y = y, train_size = training_set_size, test_size = test_set_size)
+y_hat, y = sliding_window(X = X, y = y, train_size = training_set_size, test_size = test_set_size, real_y = y_real)
 y_hat, y = np.array(y_hat), np.array(y)
 y_hat, y = np.reshape(y_hat, newshape = (-1, 1)), np.reshape(y, newshape = (-1 , 1))
 
@@ -158,9 +161,8 @@ predict_dataset_like = np.zeros(shape=(len(y_hat), dataset.shape[1]))
 predict_dataset_like[:,0] = y_hat[:,0]
 real_predicted = sc.inverse_transform(predict_dataset_like)[:,0]
 
-actual_prices = dataset[len(dataset)-len(real_predicted):,0] #THIS IS WRONG
 
-y = np.column_stack((real_predicted, actual_prices))
+y = np.column_stack((real_predicted, y))
 
 filepath = 'ETF_Opportunity_Set/LSTMoutput.csv'
 df = pd.DataFrame(y)
