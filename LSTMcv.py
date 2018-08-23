@@ -143,7 +143,7 @@ features = int(dataset_scaled.shape[1])
 
 
 
-X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset, num_feature = features) 
+X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset_scaled, num_feature = features) 
 #training_set_size = int(len(X)*.80)
 #test_size = int(.2*training_set_size)
 
