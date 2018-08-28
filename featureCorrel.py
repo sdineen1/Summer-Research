@@ -74,7 +74,7 @@ def X_y_variable_selection(time_steps, data_scaled, num_feature):
     y = []
     
     for i in range(time_steps, int(len(data_scaled))):
-        X.append(data_scaled[i-time_steps:i,1])           
+        X.append(data_scaled[i-time_steps:i,1:2])           
         y.append(data_scaled[i,0])                           
 
     X, y = np.array(X), np.array(y)
