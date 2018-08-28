@@ -135,7 +135,7 @@ test_size = int(.2*training_set_size)
 
 correlations = []
 
-for j in range(0,len(dataset.shape[1])):
+for j in range(0,dataset.shape[1]):
     #needs scaler objet in for loop
     data_scaled = scale_variable(dataset = dataset, index_of_variable = j)
     
