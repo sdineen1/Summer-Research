@@ -13,7 +13,7 @@ import pandas as pd
 
 #dataset = pd.read_excel('SP500.xlsx')
 #dataset = pd.read_csv('WaveletOutput.csv')
-dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/oih_feature_selection.csv')
+dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/spy_feature_selection.csv')
 dataset = dataset.iloc[:,1:].values
 
 null = pd.isnull(dataset[:,0])
