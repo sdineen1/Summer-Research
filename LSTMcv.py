@@ -13,7 +13,7 @@ import pandas as pd
 
 #dataset = pd.read_excel('SP500.xlsx')
 #dataset = pd.read_csv('WaveletOutput.csv')
-dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/tlt_feature_selection.csv')
+dataset = pd.read_csv('ETF_Opportunity_Set/SameTrain/spy.csv')
 dataset = dataset.iloc[:,1:].values
 
 null = pd.isnull(dataset[:,0])
@@ -145,7 +145,7 @@ features = int(dataset_scaled.shape[1])
 
 
 
-X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset_scaled, num_feature = features) 
+X, y = X_y_vectors(time_steps = time_steps, data_scaled = dataset, num_feature = features) #Should be datascaled changing for writing ensuring proper experimentation for paper
 X_real, y_real = X_y_vectors(time_steps = time_steps, data_scaled = dataset, num_feature = features)
 #training_set_size = int(len(X)*.80)
 #test_size = int(.2*training_set_size)
