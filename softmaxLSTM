@@ -113,7 +113,7 @@ training_set_size = 2000
 test_set_size = 250
 time_steps = 90
 
-X, onehot = X_y_vectors(time_steps = time_steps, data_scaled = data, num_feature = data.shape[1], one_hot = onehot_data)
+X, onehot = X_y_vectors(time_steps = time_steps, data_scaled = data_scaled, num_feature = data.shape[1], one_hot = onehot_data)
 
 predictions, actual = sliding_window(X = X, 
                           onehot = onehot, 
