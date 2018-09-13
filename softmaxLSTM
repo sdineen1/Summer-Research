@@ -97,7 +97,7 @@ def sliding_window(X, onehot, train_size, test_size):
 
     
         regressor = compile_regressor(units = 200, shape = X_train, dropout_rate = .2, optim = 'adam')
-        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = onehot_train, epochs = 100 , batch_size = 60)
+        regressor = train_regressor(compiled_regressor = regressor, X_train = X_train, y_train = onehot_train, epochs = 100 , batch_size = 1)
     
         predicted = regressor.predict(X_test)
         predicted = predicted[:,0]
